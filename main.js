@@ -1,30 +1,20 @@
-import { loadUsersSelectors, loadStatusSelectors } from './javascript/common/LoadOptions.js';
-import { Task } from './javascript/models/Tasks.js'
+document.addEventListener('DOMContentLoaded', () =>{
+    fetch('templates/tasks/tasks.html')
+    .then(response => response.text())
+    .then(content =>{
+        document.getElementById('main-window').innerHTML = content;
+        var script = document.createElement('script');
+        script.src = 'templates/tasks/Tasks.js';
+        script.type = 'module';
+        document.body.appendChild(script);
 
-document.addEventListener('DOMContentLoaded', function(){
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'templates/tasks/tasks.css';
+        document.head.appendChild(link);
 
-     
-    Task.getAllTasks()
-
-    document.getElementById('addTask').addEventListener('click', () => {
-        Task.addNewTask()  
     })
-
-    document.getElementById('filterStatus').addEventListener('change', (event1) => {
-        let selectedAssigneeValue = document.getElementById('filterAssignee').value
-        console.log("Status changed to - " + event1.target.value)
-        Task.getTaskByFilters(event1.target.value, selectedAssigneeValue)
+    .catch(error => {
+        console.error("Error loading the task.html file", error)
     })
-
-    document.getElementById('filterAssignee').addEventListener('change', (event2) => {
-        let selectedStatusValue = document.getElementById('filterStatus').value
-        console.log("Assignee changed to - " + event2.target.value)
-        Task.getTaskByFilters(selectedStatusValue, event2.target.value)
-    })
-
-    // Initial Loadings
-    loadUsersSelectors()   
-    loadStatusSelectors()
 })
-
-fetch('https://reqres.in/api/users').then(res => console.log(res))

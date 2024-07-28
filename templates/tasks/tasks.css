@@ -1,0 +1,289 @@
+/* Main container */
+.updateBox {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Darker background for better contrast */
+}
+
+/* Content box */
+.update-content {
+    position: relative;
+    display: block;
+    margin: 10% auto; /* Centered and closer to the top */
+    padding: 25px;
+    width: 70%;
+    max-width: 100%; /* Reduced max-width for a more compact look */
+    background-color: #1e1e1e; /* Darker background for the content box */
+    color: #ffffff; /* Light text for better readability */
+    border: 1px solid #444; /* Subtle border color */
+    border-radius: 12px; /* Slightly more rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+.update-content-selector {
+    position: relative;
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    gap: 10px;
+    max-width: 50%; /* Reduced max-width for a more compact look */
+    padding-left: 15px;
+}
+
+/* Input fields and buttons */
+.update-content input[type="text"],
+.update-content select,
+.update-content button {
+    display: block;
+    width: calc(100% - 30px); /* Reduced width for more space */
+    margin: 10px auto; /* Centered with uniform margin */
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    background-color: #333; /* Matching input background with overall theme */
+    color: #fff; /* Light text for readability */
+}
+
+/* Button specific styling */
+.update-content button {
+    background-color: #0a8d20; /* Primary button color */
+    color: #fff; /* White text */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.update-content button:hover {
+    background-color: #39b435; /* Darker shade on hover */
+}
+
+/* Close button */
+.updateBoxClose {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #bbb; /* Slightly lighter color for close button */
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.updateBoxClose:hover,
+.updateBoxClose:focus {
+    color: #fff; /* White color on hover */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #333;
+    color: #fff;
+}
+
+/* Container styling */
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Input group styling for horizontal alignment */
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between items */
+    margin-bottom: 20px; /* Space between input group and table */
+}
+
+/* Input and select styling */
+input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #666;
+    background-color: #555;
+    color: #fff;
+    font-size: 16px;
+    flex: 4; /* Make the input field take up more space */
+    margin-right: 10px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #666;
+    background-color: #555;
+    color: #fff;
+    font-size: 16px;
+    flex: 0.5; /* Make the dropdown smaller (half the size) */
+    margin-right: 10px;
+}
+
+button {
+    background-color: #17851a;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    flex: 0.5; /* Make the button smaller (half the size) */
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Filters styling */
+.filters {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between items */
+    margin-bottom: 20px; /* Space between filters and table */
+}
+
+.filters label {
+    margin-right: 10px; /* Space between label and select */
+    
+}
+
+.filters select {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #666;
+    background-color: #555;
+    color: #fff;
+    font-size: 16px;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #444;
+    color: #fff;
+}
+
+thead {
+    background-color: #555;
+}
+
+thead td {
+    padding: 10px;
+    text-align: center; /* Center align text in table headers */
+    border: 1px solid #666; /* Add border for column separation */
+}
+
+tbody td {
+    padding: 10px;
+    border: 1px solid #666; /* Add border for column separation */
+}
+
+tbody td:nth-child(2) {
+    text-align: left; /* Left align text in Task column */
+}
+
+tr:hover {
+    background-color: #555;
+}
+
+/* Edit and delete buttons styling */
+.edit-button, .delete-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.edit-button:hover {
+    background-color: #218838;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* Column sizing */
+td:first-child {
+    width: 10%;
+    text-align: center; /* Center align text in ID column */
+}
+
+td:nth-child(2) {
+    width: 50%; /* Increase width for Task column to accommodate extra space */
+    text-align: left; /* Left align text in Task column */
+}
+
+td:nth-child(3) {
+    width: 10%; /* Make Assignee column smaller */
+    text-align: center; /* Center align text in Assignee column */
+}
+
+td:nth-child(4) {
+    width: 15%;
+    text-align: center; /* Center align text in Status column */
+}
+
+td:last-child {
+    width: 15%; /* Make Actions column smaller */
+    text-align: center; /* Center align text in Actions column */
+}
+/* Popup container */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Popup content */
+  .popup-content {
+    position: relative;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    background-color: white;
+    border: 1px solid #888;
+    border-radius: 10px;
+  }
+
+  /* Close button */
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
