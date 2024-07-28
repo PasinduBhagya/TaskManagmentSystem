@@ -1,16 +1,16 @@
 document.addEventListener('DOMContentLoaded', () =>{
-    fetch('templates/tasks/tasks.html')
+    fetch('modules/tasks/tasks.html')
     .then(response => response.text())
     .then(content =>{
         document.getElementById('main-window').innerHTML = content;
         var script = document.createElement('script');
-        script.src = 'templates/tasks/Tasks.js';
+        script.src = 'modules/tasks/Tasks.js';
         script.type = 'module';
         document.body.appendChild(script);
 
         var link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = 'templates/tasks/tasks.css';
+        link.href = 'modules/tasks/tasks.css';
         document.head.appendChild(link);
 
     })
