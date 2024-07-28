@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="main.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+    <div id="updateBox" class="updateBox">
+        <div class="update-content" id="update-content">
+            <input type="text" id="updateTaskName" name="taskname" placeholder="Enter your task here">
+            <div class="update-content-selector">
+                <select id="usersUpdateList" name="users">
+                    <option value="select-assignee">Select Assignee</option>
+                </select>
+                <select id="statusUpdateList" name="status">
+                    <option value="New-Task"> New Task</option>
+                </select>
+                <button id="updateTask">Update</button>
+            </div>  
+            <span class="updateBoxClose">&times;</span>
+        </div>
+    </div>
+
+   <div class="container">
+        <div class="input-group">
+            <input type="text" id="taskname" name="taskname" placeholder="Type Your New Task"> 
+            <select id="usersList" name="users">
+                <option value="select-assignee">Select Assignee</option>
+            </select>
+            <select id="assingeeStatus" name="status">
+                <option value="New-Task"> New Task</option>
+            </select>
+            <button id="addTask">Add</button>
+        </div>
+
+        <div class="filters" id="filters">
+            <label for="status">Filter By: </label>
+            <select id="filterStatus" name="status">
+                <option value="default"> -- Status -- </option>
+            </select>
+            <select id="filterAssignee" name="users">
+                <option value="default"> -- Assignee -- </option>
+            </select>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Task</td>
+                    <td>Assignee</td>
+                    <td>Status</td>
+                    <td>Actions</td>
+                </tr>
+            </thead>
+            <tbody id="taskTableBody">
+            </tbody>
+        </table>
+   </div>
+</body>
+</html>
