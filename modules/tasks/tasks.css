@@ -90,13 +90,6 @@ body {
     color: #fff;
 }
 
-/* Container styling */
-.container {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-}
-
 /* Input group styling for horizontal alignment */
 .input-group {
     display: flex;

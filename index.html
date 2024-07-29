@@ -3,14 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Managment Console</title>
+    <title>Task Management Console</title>
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="main.js"></script>
 </head>
 <body>
-    <div class="menu">
-        <h1>This will be the menu</h1>
+
+    <div id="update-task-popup" class="update-task-popup">
+        <input type="text" id="update-task-name" name="taskname" placeholder="Enter your task here">
+        <div class="update-content-selector">
+            <select id="update-task-assignee" name="users">
+            </select>
+            <select id="task-update-status" name="status">
+                <option value="New-Task"> New Task</option>
+            </select>
+            <button id="task-update-button">Update</button>
+        </div>  
+        <span class="task-update-popup-close-button">&times;</span>
     </div>
-    <div class="main-window" id="main-window"></div>
+
+    <div class="top-menu">
+        <button id="top-menu-settings">Settings</button>
+        <button id="top-menu-tasks">Tasks</button>
+    </div>
+    <div class="side-menu">
+        <h1>Dropdown</h1>
+    </div>
+    <div class="main-content">
+        <div class="add-new-task-group">
+            <input type="text" id="new-task" name="taskname" placeholder="Type Your New Task"> 
+            <select id="new-task-add-assignee" name="users">
+                <option value="select-assignee">Select Assignee</option>
+            </select>
+            <select id="new-task-add-status" name="status">
+                <option value="New-Task"> New Task </option>
+            </select>
+            <button id="new-task-add-button"> Add </button>
+        </div>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Task</td>
+                        <td>Assignee</td>
+                        <td>Status</td>
+                        <td>Actions</td>
+                    </tr>
+                </thead>
+                <tbody id="taskTableBody"></tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
