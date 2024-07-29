@@ -2,8 +2,6 @@ import { Tasks } from './modules/tasks/tasks.js'
 import { StatusValues } from './modules/common/StatusValues.js'
 import { Users } from './modules/common/AssingeesValues.js'
 
-let rederedTasks = []
-
 document.getElementById('top-menu-settings').onclick = () => {
     document.getElementsByClassName('side-menu')[0].style.display = 'none' // Hidding the side menu
     document.getElementsByClassName('main-content')[0].style.display = 'none' // Hidding the side menu
@@ -37,17 +35,21 @@ function clearUserInputs(){
     // document.getElementById('addTask').textContent = 'Add'
 }
 
+function renderFilteredTasks(){
+    let filteredStatus = document.getElementById('task-filter-status').value
+    let filteredAssignee = document.getElementById('task-filter-assingee').value
+    let filteredTasks = Tasks.getWithFilters(filteredStatus, filteredAssignee)
+    
+    loadingRenderedTasks(filteredTasks)
+}
+
 // Loading retured tasks to the Web UI
-function loadingRenderedTasks() {
-
-
-
-    rederedTasks = Tasks.get()
+function loadingRenderedTasks(tasks) {
 
     let taskTableBody = document.getElementById('taskTableBody');
     taskTableBody.innerHTML = '';
 
-    rederedTasks.forEach(task => {
+    tasks.forEach(task => {
         let row = document.createElement('tr');  
         
         row.innerHTML = `
@@ -93,7 +95,7 @@ function loadingRenderedTasks() {
                 }
                 Tasks.update(updatedTaskObject, taskToUpdate)
                 updatePopup.style.display = 'none';
-                loadingRenderedTasks()  
+                renderFilteredTasks() 
             }                
         });
     });
@@ -102,7 +104,7 @@ function loadingRenderedTasks() {
         button.addEventListener('click', (eventDelete) => {
             const taskid = Number(eventDelete.target.getAttribute('data-id'));
             Tasks.remove(taskid)
-            loadingRenderedTasks()       
+            renderFilteredTasks()        
         });
     });
 
@@ -111,7 +113,7 @@ function loadingRenderedTasks() {
 
 function loadStatusValues(){
     let statusValues = StatusValues.get()
-    let statusElements = ['new-task-add-status', 'task-update-status']
+    let statusElements = ['new-task-add-status', 'task-update-status', 'task-filter-status']
 
     statusElements.forEach(statusElement => {
 
@@ -129,7 +131,7 @@ function loadStatusValues(){
 }
 
 function loadUsersValues(){
-    let useElements = ['new-task-add-assignee', 'update-task-assignee']
+    let useElements = ['new-task-add-assignee', 'update-task-assignee', 'task-filter-assingee']
     let usersValues = Users.get()
     useElements.forEach(userElement =>{
         if(!userElement){
@@ -146,9 +148,17 @@ function loadUsersValues(){
     })
 }
 
+
+
 window.addEventListener('DOMContentLoaded', () =>{
-    loadingRenderedTasks()
+    let rederedTasks = Tasks.get()
+
+    loadingRenderedTasks(rederedTasks)
     loadStatusValues()
     loadUsersValues()
     clearUserInputs()
+
+    document.getElementById('task-filters').addEventListener('change', () =>{
+        renderFilteredTasks()
+    })
 })

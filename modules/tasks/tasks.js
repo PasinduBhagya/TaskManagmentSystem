@@ -205,20 +205,17 @@ export class Tasks {
         return taskToUpdate
     }
 
-    // static getTaskByFilters(status, assignee) {
-    //     if (status !== "default" && assignee !== "default"){
-    //         const filteredTasks = tasks.filter(task => task.assignee === assignee && task.status === status);
-    //         loadAllTasks(filteredTasks);
-    //     }
-    //     else if (status === "default" && assignee !== "default"){
-    //         const filteredTasks = tasks.filter(task => task.assignee === assignee);
-    //         loadAllTasks(filteredTasks);
-    //     }
-    //     else if (status !== "default" && assignee === "default"){
-    //         const filteredTasks = tasks.filter(task =>task.status === status);
-    //         loadAllTasks(filteredTasks);
-    //     }
-    // }
+    static getWithFilters(filteredStatus, filteredAssignee) {
+        if (filteredAssignee === 'default' && filteredStatus === 'default'){
+            return tasks
+        }else if(filteredAssignee === 'default' && filteredStatus !== 'default'){
+            return tasks.filter(task => task.status === filteredStatus)
+        }else if(filteredAssignee !== 'default' && filteredStatus === 'default'){
+            return tasks.filter(task => task.assignee === filteredAssignee)
+        }else if(filteredAssignee !== 'default' && filteredStatus !== 'default'){
+            return tasks.filter(task => task.assignee === filteredAssignee && task.status === filteredStatus)
+        }
+    }
 
     static update(updateTaskObject, oldTaskObject){
         console.log(oldTaskObject)
@@ -238,63 +235,3 @@ export class Tasks {
         }
     }
 }
-
-
-
-
-// function loadStatusSelectors(){
-    
-//     let statusElements = ['assingeeStatus', 'filterStatus', 'statusUpdateList']
-
-//     statusElements.forEach(statusElement => {
-
-//         let statusList = document.getElementById(statusElement)
-
-//         statusValues.forEach(singleStatus => {
-//             let statusListOption = document.createElement('option');
-
-//             statusListOption.value = singleStatus.statusValue;
-//             statusListOption.textContent = singleStatus.statusValue;
-    
-//             statusList.appendChild(statusListOption)
-//         })
-//     }) 
-// }
-
-// function loadUsersSelectors(){
-//     let useElements = ['usersList', 'filterAssignee', 'usersUpdateList']
-   
-//     useElements.forEach(userElement =>{
-//         if(!userElement){
-//             console.log(userElement + " is not")
-//         }
-//         let usersList = document.getElementById(userElement);
-//         users.forEach(user => {
-//             let userListOption = document.createElement('option');
-//             userListOption.value = user.username;
-//             userListOption.textContent = user.username;
-    
-//             usersList.appendChild(userListOption)
-//         }) 
-//     })
-// }
-
-// Task.getAllTasks()
-// loadUsersSelectors()   
-// loadStatusSelectors()
-
-// document.getElementById('addTask').addEventListener('click', () => {
-//     Task.addNewTask()  
-// })
-
-// document.getElementById('filterStatus').addEventListener('change', (event1) => {
-//     let selectedAssigneeValue = document.getElementById('filterAssignee').value
-//     console.log("Status changed to - " + event1.target.value)
-//     Task.getTaskByFilters(event1.target.value, selectedAssigneeValue)
-// })
-
-// document.getElementById('filterAssignee').addEventListener('change', (event2) => {
-//     let selectedStatusValue = document.getElementById('filterStatus').value
-//     console.log("Assignee changed to - " + event2.target.value)
-//     Task.getTaskByFilters(selectedStatusValue, event2.target.value)
-// })

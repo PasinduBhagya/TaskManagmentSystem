@@ -27,7 +27,17 @@
         <button id="top-menu-tasks">Tasks</button>
     </div>
     <div class="side-menu">
-        <h1>Dropdown</h1>
+
+        <div class="task-filters" id="task-filters">
+            <label for="filters">Filters</label>
+            <select id="task-filter-assingee" name="task-filter-assingee">
+                <option value="default"> -- Assignee -- </option>
+            </select>
+            <select id="task-filter-status" name="task-filter-status">
+                <option value="default"> -- Status -- </option>
+            </select>
+        </div>
+
     </div>
     <div class="main-content">
         <div class="add-new-task-group">
