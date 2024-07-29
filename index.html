@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management Console</title>
     <link rel="stylesheet" href="styles.css">
-    <script type="module" src="main.js"></script>
+    <link rel="stylesheet" href="./styles/settings.css">
+    <script type="module" src="./core/main.js"></script>
 </head>
 <body>
 
@@ -26,7 +27,7 @@
         <button id="top-menu-settings">Settings</button>
         <button id="top-menu-tasks">Tasks</button>
     </div>
-    <div class="side-menu">
+    <div class="side-menu-tasks">
 
         <div class="task-filters" id="task-filters">
             <label for="filters">Filters</label>
@@ -36,10 +37,18 @@
             <select id="task-filter-status" name="task-filter-status">
                 <option value="default"> -- Status -- </option>
             </select>
+            <input type="date" id="datePicker" name="datePicker">   
         </div>
-
     </div>
-    <div class="main-content">
+
+    <div class="side-menu-settings">
+            <label for="Settings">Settings</label><br>
+            <button id="side-menu-settings-user-managment">User Management</button><br>
+            <button id="side-menu-settings-group-management">Group Management</button><br>
+            <button id="side-menu-settings-application-configuration">Application Configurations</button>
+    </div>
+
+    <div class="main-content-tasks">
         <div class="add-new-task-group">
             <input type="text" id="new-task" name="taskname" placeholder="Type Your New Task"> 
             <select id="new-task-add-assignee" name="users">
@@ -63,6 +72,17 @@
                 </thead>
                 <tbody id="taskTableBody"></tbody>
             </table>
+        </div>
+    </div>
+    <div class="main-content-setting-common">
+        <div class="main-content-settings-user-management">
+            <h1>User Related Settings</h1>
+        </div>
+        <div class="main-content-settings-group-management">
+            <h1>Group Related Settings</h1>
+        </div>
+        <div class="main-content-settings-application-configuration">
+            <h1>Application Related Settings</h1>
         </div>
     </div>
 </body>

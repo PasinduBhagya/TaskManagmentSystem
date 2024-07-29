@@ -105,7 +105,7 @@ body {
 }
 
 /* Side Menu Styling */
-.side-menu {
+.side-menu-tasks, .side-menu-settings {
     position: fixed;
     top: 80px; /* Below the top menu */
     left: 20px; /* Margin from the left */
@@ -118,8 +118,14 @@ body {
     box-sizing: border-box;
 }
 
+.side-menu-settings {
+    display: none;
+}
+
+
 /* Main Content Styling */
-.main-content {
+
+.main-content-tasks, .main-content-setting-common {
     margin-left: 340px; /* Space for the side menu and its left margin */
     margin-top: 180px; /* Adjusted space for the top menu including its margins */
     padding: 20px;
@@ -128,6 +134,9 @@ body {
     box-sizing: border-box;
 }
 
+.main-content-settings-user-management, .main-content-settings-group-management, .main-content-settings-application-configuration {
+    display: none;
+}
 
 /* Table Wrapper Styling */
 .table-wrapper {
