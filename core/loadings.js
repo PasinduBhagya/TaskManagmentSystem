@@ -82,14 +82,45 @@ export function loadingRenderedUsers(users){
         });
     });
 
-    // document.querySelectorAll('.user-edit-button').forEach(button => {
-    //     button.addEventListener('click', (eventuserEdit) => {
-    //         const userid = Number(eventuserEdit.target.getAttribute('data-id'));
-    //         console.log(userid + " will be deleted")
-    //         const renderedusers = Users.getBySearch(document.getElementById('main-content-settings-user-management-user-search').value)
-    //         loadingRenderedUsers(renderedusers)     
-    //     });
-    // });
+    document.querySelectorAll('.user-edit-button').forEach(button => {
+        button.addEventListener('click', (eventuserEdit) => {
+            const userid = Number(eventuserEdit.target.getAttribute('data-id'));
+            
+            const userToUpdate = Users.getUserByID(userid)
+            
+
+            const pop_blur_background = document.getElementsByClassName('blur-background')[0];
+
+            const user_add_popup = document.getElementById('new-user-add-popup');
+            
+            document.getElementById('new-user-first-name').value = userToUpdate.firstname
+            document.getElementById('new-user-last-name').value = userToUpdate.lastname
+            document.getElementById('new-user-username').value = userToUpdate.username
+            document.getElementById('new-user-email').value = userToUpdate.email
+            
+
+            user_add_popup.style.display = 'block'
+            pop_blur_background.style.zIndex = 100;
+
+            document.getElementById('new-user-add-button').onclick = () =>{
+                const userUpdatedObject = {
+                    userid: userid,
+                    firstname: document.getElementById('new-user-first-name').value, 
+                    lastname: document.getElementById('new-user-last-name').value, 
+                    username: document.getElementById('new-user-username').value,
+                    email: document.getElementById('new-user-email').value,
+                }
+
+                Users.update(userUpdatedObject, userToUpdate)
+
+                user_add_popup.style.display = 'none'
+                pop_blur_background.style.zIndex = -1;
+
+                const renderedusers = Users.getBySearch(document.getElementById('main-content-settings-user-management-user-search').value)
+                loadingRenderedUsers(renderedusers)    
+            }
+        });
+    });
 }
 
 

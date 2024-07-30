@@ -107,8 +107,6 @@ export function buttons(){
         clearUserInputs()
         loadingRenderedUsers(renderedusers)
 
-
-
     }    
     // Add user close button
     document.getElementsByClassName('new-user-add-close-button')[0].onclick = () => {

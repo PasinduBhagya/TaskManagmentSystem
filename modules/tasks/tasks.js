@@ -279,7 +279,6 @@ export class Tasks {
     }
 
     static update(updateTaskObject, oldTaskObject){
-        console.log(oldTaskObject)
         tasks[tasks.indexOf(oldTaskObject)] = updateTaskObject
     }
 

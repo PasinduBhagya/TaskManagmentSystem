@@ -176,8 +176,13 @@ export class Users {
         return users.filter(user => pattern.test(user.firstname.toLocaleLowerCase()) || pattern.test(user.lastname.toLocaleLowerCase()) || pattern.test(user.username.toLocaleLowerCase()) || pattern.test(user.email.toLocaleLowerCase()))
     }
 
-    static getUserByID(){
-        
+    static getUserByID(updateuserid){
+        const userToUpdate = users.find(user => user.userid === updateuserid);
+        return userToUpdate   
+    }
+
+    static update(userUpdatedObject, userOldObject){
+        users[users.indexOf(userOldObject)] = userUpdatedObject
     }
 
     static remove(userid) {
