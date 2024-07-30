@@ -1,5 +1,5 @@
 import { StatusValues } from '../modules/common/StatusValues.js'
-import { Users } from '../modules/common/AssingeesValues.js'
+import { Users } from '../modules/users/users.js'
 import { Tasks } from '../modules/tasks/tasks.js'
 
 export function loadStatusValues(){
@@ -32,7 +32,7 @@ export function loadUsersValues(){
         usersValues.forEach(user => {
             let userListOption = document.createElement('option');
             userListOption.value = user.username;
-            userListOption.textContent = user.username;
+            userListOption.textContent = `${user.firstname} ${user.lastname}`;
     
             usersList.appendChild(userListOption)
         }) 
@@ -48,6 +48,33 @@ export function renderFilteredTasks(){
     loadingRenderedTasks(filteredTasks)
 }
 
+// Loading Rendered Users to the User settings
+
+export function loadingRenderedUsers(users){
+    
+    let usersTableBody = document.getElementById('usersTableBody');
+    usersTableBody.innerHTML = '';
+
+    users.forEach(user => {
+        let row = document.createElement('tr');
+        row.className = "users-table-tdata-tr"  
+        
+        row.innerHTML = `
+            <td class="users-td-col1">${user.userid}</td>
+            <td class="users-td-col2">${user.firstname}</td>
+            <td class="users-td-col3">${user.lastname}</td>
+            <td class="users-td-col4">${user.username}</td>
+            <td class="users-td-col5">${user.email}</td>
+            <td class="users-td-col6">
+                <button class="task-edit-button" data-id="${user.userid}">Edit</button>
+                <button class="task-delete-button" data-id="${user.userid}">Delete</button>
+            </td>
+        `;
+        usersTableBody.appendChild(row);
+    });
+}
+
+
 // Loading retured tasks to the Web UI - Only need for the initial Loading
 export function loadingRenderedTasks(tasks) {
 
@@ -56,13 +83,14 @@ export function loadingRenderedTasks(tasks) {
 
     tasks.forEach(task => {
         let row = document.createElement('tr');  
+        row.className = "tasks-table-tdata-tr"
         
         row.innerHTML = `
-            <td>${task.id}</td>
-            <td>${task.task}</td>
-            <td>${task.assignee}</td>
-            <td id="status">${task.status}</td>
-            <td class="actions">
+            <td class="tasks-td-col1">${task.id}</td>
+            <td class="tasks-td-col2">${task.task}</td>
+            <td class="tasks-td-col3">${task.assignee}</td>
+            <td class="tasks-td-col4" id="status">${task.status}</td>
+            <td class="tasks-td-col5">
                 <button class="task-edit-button" data-id="${task.id}">Edit</button>
                 <button class="task-delete-button" data-id="${task.id}">Delete</button>
             </td>

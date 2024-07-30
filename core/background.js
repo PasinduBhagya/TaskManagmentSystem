@@ -3,4 +3,6 @@ export function clearUserInputs(){
     document.getElementById('new-task').value = '';
     document.getElementById('new-task-add-assignee').value = 'select-assignee';
     document.getElementById('new-task-add-status').value = 'New-Task';
+
+    document.getElementById('main-content-settings-user-management-user-search').value = '';
 }

@@ -1,0 +1,49 @@
+<table class="tasks-table">
+    <thead class="tasks-table-thead">
+        <tr class="tasks-table-thead-tr">
+            <td class="tasks-th-col1">ID</td>
+            <td class="tasks-th-col2">Task</td>
+            <td class="tasks-th-col3">Assignee</td>
+            <td class="tasks-th-col4">Status</td>
+            <td class="tasks-th-col5">Actions</td>
+        </tr>
+    </thead>
+    <tbody id="taskTableBody">
+        <tr class="tasks-table-tdata-tr">
+            <td class="tasks-td-col1">${task.id}</td>
+            <td class="tasks-td-col2">${task.task}</td>
+            <td class="tasks-td-col3">${task.assignee}</td>
+            <td class="tasks-td-col4" id="status">${task.status}</td>
+            <td class="tasks-td-col5">
+                <button class="task-edit-button" data-id="${task.id}">Edit</button>
+                <button class="task-delete-button" data-id="${task.id}">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="users-table">
+    <thead class="users-table-thead">
+        <tr class="users-table-thead-tr">
+            <td class="users-th-col1">User ID</td>
+            <td class="users-th-col2">First Name</td>
+            <td class="users-th-col3">Last Name</td>
+            <td class="users-th-col4">Username</td>
+            <td class="users-th-col5">E-mail</td>
+            <td class="users-th-col6">Actions</td>
+        </tr>
+    </thead>
+    <tbody id="usersTableBody">
+        <tr>
+            <td class="users-td-col1">${user.userid}</td>
+            <td class="users-td-col2">${user.firstname}</td>
+            <td class="users-td-col3">${user.lastname}</td>
+            <td class="users-td-col4">${user.username}</td>
+            <td class="users-td-col5">${user.email}</td>
+            <td class="users-td-col6">
+                <button class="task-edit-button" data-id="${user.userid}">Edit</button>
+                <button class="task-delete-button" data-id="${user.userid}">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

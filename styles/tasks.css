@@ -1,0 +1,101 @@
+/* Table Styling */
+.tasks-table {
+    width: 100%;
+    border-collapse: collapse; /* Ensure borders are properly collapsed */
+}
+
+/* Table Header Styling */
+.tasks-table-thead {
+    display: table; /* Ensure the header remains in the normal flow of the table */
+    width: 100%; /* Match the table width */
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0; /* Stick the header to the top */
+    background-color: #1f1f1f; /* Darker background for table header */
+    color: #e0e0e0; /* Light text color */
+    z-index: 2; /* Ensure it stays on top of the table body */
+}
+
+/* Table Header Row Styling */
+.tasks-table-thead-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* Ensure table columns are sized consistently */
+}
+
+/* Table Header Cells Styling */
+.tasks-th-col1, .tasks-th-col2, .tasks-th-col3, .tasks-th-col4, .tasks-th-col5 {
+    padding: 10px;
+    text-align: center;
+}
+
+/* Table Body Styling */
+#taskTableBody {
+    display: block; /* Enable scrolling by setting the table body to block */
+    height: 100%; /* Take up full height of the wrapper */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Table Body Row Styling */
+.tasks-table-tdata-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* Ensure table columns are sized consistently */
+}
+
+/* Table Body Cells Styling */
+.tasks-td-col1, .tasks-td-col2, .tasks-td-col3, .tasks-td-col4, .tasks-td-col5 {
+    background-color: #2a2a2a; /* Slightly lighter background for table rows */
+    color: #e0e0e0; /* Light text color */
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #3a3a3a; /* Add borders for better visibility */
+}
+
+.tasks-td-col2 {
+    text-align: left; /* Left align for the Task column */
+}
+
+/* Ensure proper sizing of table columns */
+.tasks-th-col1, .tasks-td-col1 {
+    width: 5%; /* 5% width for ID */
+}
+
+.tasks-th-col2, .tasks-td-col2 {
+    width: 50%; /* 50% width for Task */
+}
+
+.tasks-th-col3, .tasks-td-col3 {
+    width: 10%; /* 10% width for Assignee */
+}
+
+.tasks-th-col4, .tasks-td-col4 {
+    width: 10%; /* 10% width for Status */
+}
+
+.tasks-th-col5, .tasks-td-col5 {
+    width: 10%; /* 10% width for Actions */
+}
+
+/* Button Styling */
+.task-edit-button, .task-delete-button {
+    background-color: #4caf50; /* Green background for buttons */
+    color: #ffffff; /* White text color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Adjust padding */
+    cursor: pointer;
+    border-radius: 8px; /* Rounded corners */
+}
+
+.task-delete-button {
+    background-color: #c74949; /* Green background for buttons */
+}
+
+.task-delete-button:hover {
+    background-color: #830f0f; /* Darker green on hover */
+}
+
+.task-edit-button:hover {
+    background-color: #065213; /* Darker green on hover */
+}
+

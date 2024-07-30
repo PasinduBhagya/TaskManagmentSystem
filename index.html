@@ -6,6 +6,7 @@
     <title>Task Management Console</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="./styles/settings.css">
+    <link rel="stylesheet" href="./styles/tasks.css">
     <script type="module" src="./core/main.js"></script>
 </head>
 <body>
@@ -46,6 +47,7 @@
             <button id="side-menu-settings-user-managment">User Management</button><br>
             <button id="side-menu-settings-group-management">Group Management</button><br>
             <button id="side-menu-settings-application-configuration">Application Configurations</button>
+            <button id="side-menu-settings-application-configuration">Layout Configurations</button>
     </div>
 
     <div class="main-content-tasks">
@@ -60,14 +62,14 @@
             <button id="new-task-add-button"> Add </button>
         </div>
         <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <td>ID</td>
-                        <td>Task</td>
-                        <td>Assignee</td>
-                        <td>Status</td>
-                        <td>Actions</td>
+            <table class="tasks-table">
+                <thead class="tasks-table-thead">
+                    <tr class="tasks-table-thead-tr">
+                        <td class="tasks-th-col1">ID</td>
+                        <td class="tasks-th-col2">Task</td>
+                        <td class="tasks-th-col3">Assignee</td>
+                        <td class="tasks-th-col4">Status</td>
+                        <td class="tasks-th-col5">Actions</td>
                     </tr>
                 </thead>
                 <tbody id="taskTableBody"></tbody>
@@ -77,6 +79,23 @@
     <div class="main-content-setting-common">
         <div class="main-content-settings-user-management">
             <h1>User Related Settings</h1>
+            <input type="text" name="main-content-settings-user-management-user-search" id="main-content-settings-user-management-user-search" placeholder="Search">
+            <button>Add New User</button>
+            <div class="table-wrapper">
+                <table class="users-table">
+                    <thead class="users-table-thead">
+                        <tr class="users-table-thead-tr">
+                            <td class="users-th-col1">User ID</td>
+                            <td class="users-th-col2">First Name</td>
+                            <td class="users-th-col3">Last Name</td>
+                            <td class="users-th-col4">Username</td>
+                            <td class="users-th-col5">E-mail</td>
+                            <td class="users-th-col6">Actions</td>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
         </div>
         <div class="main-content-settings-group-management">
             <h1>Group Related Settings</h1>
