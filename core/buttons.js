@@ -16,6 +16,9 @@ export function buttons(){
     const main_content_settings_user_management = document.getElementsByClassName('main-content-settings-user-management')[0];
     const main_content_settings_group_management = document.getElementsByClassName('main-content-settings-group-management')[0];
     const main_content_settings_application_configuration = document.getElementsByClassName('main-content-settings-application-configuration')[0];
+    const pop_blur_background = document.getElementsByClassName('blur-background')[0];
+
+    const new_user_add_popup = document.getElementById('new-user-add-popup');
 
     // For the loadingRenderedUsers to load users
     let renderedusers = Users.get()
@@ -56,7 +59,7 @@ export function buttons(){
             clearUserInputs()
         }  
     }
-    
+
     // Buttons inside settings
     document.getElementById('side-menu-settings-user-managment').onclick = () => {
         main_content_settings_user_management.style.display = 'block'
@@ -82,5 +85,35 @@ export function buttons(){
         const renderedusers = Users.getBySearch(usersearchevent.target.value)
         loadingRenderedUsers(renderedusers)
     })
-    
+
+    // Add User Pop up button
+    document.getElementById('new-user-add-pop-button').onclick = () => {
+        new_user_add_popup.style.display = 'block'
+        pop_blur_background.style.zIndex = 100;
+    }
+
+    // Add user Add button
+    document.getElementById('new-user-add-button').onclick = () => {
+        new_user_add_popup.style.display = 'none'
+        pop_blur_background.style.zIndex = -1;
+
+        const new_user_first_name = document.getElementById('new-user-first-name').value
+        const new_user_last_name = document.getElementById('new-user-last-name').value
+        const new_user_username = document.getElementById('new-user-username').value
+        const new_user_email = document.getElementById('new-user-email').value
+        const new_user_jira_apikey = document.getElementById('new-user-jira-apikey').value
+
+        Users.add(new_user_first_name, new_user_last_name, new_user_username, new_user_email, new_user_jira_apikey)
+        clearUserInputs()
+        loadingRenderedUsers(renderedusers)
+
+
+
+    }    
+    // Add user close button
+    document.getElementsByClassName('new-user-add-close-button')[0].onclick = () => {
+        new_user_add_popup.style.display = 'none'
+        pop_blur_background.style.zIndex = -1;
+        clearUserInputs()
+    }    
 }   

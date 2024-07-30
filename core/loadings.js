@@ -81,6 +81,15 @@ export function loadingRenderedUsers(users){
             loadingRenderedUsers(renderedusers)     
         });
     });
+
+    // document.querySelectorAll('.user-edit-button').forEach(button => {
+    //     button.addEventListener('click', (eventuserEdit) => {
+    //         const userid = Number(eventuserEdit.target.getAttribute('data-id'));
+    //         console.log(userid + " will be deleted")
+    //         const renderedusers = Users.getBySearch(document.getElementById('main-content-settings-user-management-user-search').value)
+    //         loadingRenderedUsers(renderedusers)     
+    //     });
+    // });
 }
 
 

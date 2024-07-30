@@ -142,13 +142,28 @@ let users = [
 ];
 
 export class Users {
-    constructor (userid, username){
+    constructor (userid, firstname, lastname, username, email){
         this.userid = userid
+        this.firstname = firstname
+        this.lastname = lastname
         this.username = username
+        this.email = email
     }
 
-    static add(){
+    static add(new_user_first_name, new_user_last_name, new_user_username, new_user_email, new_user_jira_apikey){
+        
+        const newUserID = users[users.length - 1].userid + 1 
 
+        const newUserObject = {
+            userid: newUserID,
+            firstname: new_user_first_name,
+            lastname: new_user_last_name,
+            username: new_user_username,
+            email: new_user_email,
+            new_user_jira_apikey: new_user_jira_apikey
+        }
+
+        users.push(newUserObject) 
     }
 
     static get(){

@@ -1,11 +1,11 @@
 /* Table Styling */
-.tasks-table {
+.users-table {
     width: 100%;
     border-collapse: collapse; /* Ensure borders are properly collapsed */
 }
 
 /* Table Header Styling */
-.tasks-table-thead {
+.users-table-thead {
     display: table; /* Ensure the header remains in the normal flow of the table */
     width: 100%; /* Match the table width */
     position: -webkit-sticky; /* For Safari */
@@ -17,34 +17,38 @@
 }
 
 /* Table Header Row Styling */
-.tasks-table-thead-tr {
+.users-table-thead-tr {
     display: table;
     width: 100%;
     table-layout: fixed; /* Ensure table columns are sized consistently */
 }
 
 /* Table Header Cells Styling */
-.tasks-th-col1, .tasks-th-col2, .tasks-th-col3, .tasks-th-col4, .tasks-th-col5 {
+.users-th-col1, .users-th-col2, .users-th-col3, .users-th-col4, .users-th-col5{
+    padding: 10px;
+    text-align: left;
+}
+.users-th-col6 {
     padding: 10px;
     text-align: center;
 }
 
 /* Table Body Styling */
-#taskTableBody {
+#usersTableBody {
     display: block; /* Enable scrolling by setting the table body to block */
     height: 100%; /* Take up full height of the wrapper */
     overflow-y: auto; /* Enable vertical scrolling */
 }
 
 /* Table Body Row Styling */
-.tasks-table-tdata-tr {
+#usersTableBody tr {
     display: table;
     width: 100%;
     table-layout: fixed; /* Ensure table columns are sized consistently */
 }
 
 /* Table Body Cells Styling */
-.tasks-td-col1, .tasks-td-col2, .tasks-td-col3, .tasks-td-col4, .tasks-td-col5 {
+.users-td-col1, .users-td-col2, .users-td-col3, .users-td-col4, .users-td-col5, .users-td-col6 {
     background-color: #2a2a2a; /* Slightly lighter background for table rows */
     color: #e0e0e0; /* Light text color */
     padding: 10px;
@@ -52,33 +56,37 @@
     border-bottom: 1px solid #3a3a3a; /* Add borders for better visibility */
 }
 
-.tasks-td-col2 {
-    text-align: left; /* Left align for the Task column */
+.users-td-col2, .users-td-col3, .users-td-col4, .users-td-col5 {
+    text-align: left; /* Left align for the text columns */
 }
 
 /* Ensure proper sizing of table columns */
-.tasks-th-col1, .tasks-td-col1 {
-    width: 5%; /* 5% width for ID */
+.users-th-col1, .users-td-col1 {
+    width: 5%; /* 10% width for User ID */
 }
 
-.tasks-th-col2, .tasks-td-col2 {
-    width: 50%; /* 50% width for Task */
+.users-th-col2, .users-td-col2 {
+    width: 15%; /* 20% width for First Name */
 }
 
-.tasks-th-col3, .tasks-td-col3 {
-    width: 10%; /* 10% width for Assignee */
+.users-th-col3, .users-td-col3 {
+    width: 15%; /* 20% width for Last Name */
 }
 
-.tasks-th-col4, .tasks-td-col4 {
-    width: 10%; /* 10% width for Status */
+.users-th-col4, .users-td-col4 {
+    width: 15%; /* 20% width for Username */
 }
 
-.tasks-th-col5, .tasks-td-col5 {
-    width: 10%; /* 10% width for Actions */
+.users-th-col5, .users-td-col5 {
+    width: 35%; /* 20% width for E-mail */
+}
+
+.users-th-col6, .users-td-col6 {
+    width: 15%; /* 10% width for Actions */
 }
 
 /* Button Styling */
-.task-edit-button, .task-delete-button {
+.user-edit-button, .user-delete-button {
     background-color: #4caf50; /* Green background for buttons */
     color: #ffffff; /* White text color */
     border: none; /* Remove border */
@@ -87,24 +95,23 @@
     border-radius: 8px; /* Rounded corners */
 }
 
-.task-delete-button {
-    background-color: #c74949; /* Green background for buttons */
+.user-delete-button {
+    background-color: #c74949; /* Red background for delete button */
 }
 
-.task-delete-button:hover {
-    background-color: #830f0f; /* Darker green on hover */
+.user-delete-button:hover {
+    background-color: #830f0f; /* Darker red on hover */
 }
 
-.task-edit-button:hover {
+.user-edit-button:hover {
     background-color: #065213; /* Darker green on hover */
 }
 
 
-/* Update Task Related */
+/* Add user pop */
 
-
-/* Popup Container Styling */
-.update-task-popup {
+/* Popup Container Styling for New User Add Popup */
+.new-user-add-popup {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     top: 50%; /* Center vertically */
@@ -118,8 +125,8 @@
     z-index: 1000; /* Make sure it’s above other content */
 }
 
-/* Close Button Styling */
-.task-update-popup-close-button {
+/* Close Button Styling for New User Add Popup */
+.new-user-add-popup .new-user-add-close-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -127,10 +134,10 @@
     cursor: pointer;
 }
 
-/* Popup Input and Button Styling */
-.update-task-popup input,
-.update-task-popup select,
-.update-task-popup button {
+/* Popup Input and Button Styling for New User Add Popup */
+.new-user-add-popup input,
+.new-user-add-popup select,
+.new-user-add-popup button {
     margin-top: 10px;
     width: calc(100% - 22px); /* Adjust width for padding */
     padding: 10px;
@@ -141,13 +148,13 @@
     box-sizing: border-box; /* Ensure padding is included in width */
 }
 
-.update-task-popup button {
+/* Button Styling for New User Add Popup */
+.new-user-add-popup button {
     background-color: #4caf50; /* Green background */
     color: #ffffff; /* White text color */
     cursor: pointer;
 }
 
-.update-task-popup button:hover {
+.new-user-add-popup button:hover {
     background-color: #45a049; /* Darker green on hover */
 }
-

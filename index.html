@@ -6,11 +6,11 @@
     <title>Task Management Console</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="./styles/settings.css">
+    <link rel="stylesheet" href="./styles/users.css">
     <link rel="stylesheet" href="./styles/tasks.css">
     <script type="module" src="./core/main.js"></script>
 </head>
 <body>
-
     <div id="update-task-popup" class="update-task-popup">
         <input type="text" id="update-task-name" name="taskname" placeholder="Enter your task here">
         <div class="update-content-selector">
@@ -23,6 +23,28 @@
         </div>  
         <span class="task-update-popup-close-button">&times;</span>
     </div>
+    
+    <!-- User Add Hidden Form  -->
+     <div class="blur-background"></div>
+         <div id="new-user-add-popup" class="new-user-add-popup">
+            <h1>User Information</h1>
+             <input type="text" id="new-user-first-name" placeholder="First Name">
+             <input type="text" id="new-user-last-name" placeholder="Last Name">
+             <input type="text" id="new-user-username" placeholder="Username">
+             <input type="text" id="new-user-email" placeholder="Email Address">
+             <input type="text" id="new-user-jira-apikey" placeholder="JIRA API Key (Optional)">
+             
+             <div class="new-user-content-selector">
+                 <select id="new-user-groups" name="groups">
+                     <option value="default"> Select Group</option>
+                    </select>
+                    <select id="new-user-role" name="role">
+                        <option value="default"> Select Role</option>
+                    </select>
+                </div>
+                <button id="new-user-add-button">Add</button>
+                <span class="new-user-add-close-button">&times;</span>
+            </div>
 
     <div class="top-menu">
         <button id="top-menu-settings">Settings</button>
@@ -80,7 +102,7 @@
         <div class="main-content-settings-user-management">
             <h1>User Related Settings</h1>
             <input type="text" name="main-content-settings-user-management-user-search" id="main-content-settings-user-management-user-search" placeholder="Search">
-            <button>Add New User</button>
+            <button id="new-user-add-pop-button">Add New User</button>
             <div class="table-wrapper">
                 <table class="users-table">
                     <thead class="users-table-thead">
