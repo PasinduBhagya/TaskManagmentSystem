@@ -29,7 +29,7 @@ export function buttons(){
         main_content_setting_common.style.display = 'block'
         main_content_settings_group_management.style.display = 'none'
         main_content_settings_application_configuration.style.display = 'none'
-        
+    
         loadingRenderedUsers(renderedusers)
     }
     
@@ -63,16 +63,19 @@ export function buttons(){
         main_content_settings_group_management.style.display = 'none'
         main_content_settings_application_configuration.style.display = 'none'
         loadingRenderedUsers(renderedusers)
+        clearUserInputs()
     }
     document.getElementById('side-menu-settings-group-management').onclick = () => {
         main_content_settings_user_management.style.display = 'none'
         main_content_settings_group_management.style.display = 'block'
         main_content_settings_application_configuration.style.display = 'none'
+        clearUserInputs()
     }
     document.getElementById('side-menu-settings-application-configuration').onclick = () => {
         main_content_settings_user_management.style.display = 'none'
         main_content_settings_group_management.style.display = 'none'
         main_content_settings_application_configuration.style.display = 'block'
+        clearUserInputs()
     }
     
     document.getElementById('main-content-settings-user-management-user-search').addEventListener('input', (usersearchevent) => {

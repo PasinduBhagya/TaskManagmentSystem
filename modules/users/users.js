@@ -147,15 +147,34 @@ export class Users {
         this.username = username
     }
 
+    static add(){
+
+    }
+
     static get(){
         return users
     }
 
     static getBySearch(searchvalue){
-        const pattern = new RegExp(searchvalue)
+        const pattern = new RegExp(searchvalue.toLocaleLowerCase())
 
-        return users.filter(user => pattern.test(user.firstname) || pattern.test(user.lastname) || pattern.test(user.username) || pattern.test(user.email))
+        return users.filter(user => pattern.test(user.firstname.toLocaleLowerCase()) || pattern.test(user.lastname.toLocaleLowerCase()) || pattern.test(user.username.toLocaleLowerCase()) || pattern.test(user.email.toLocaleLowerCase()))
+    }
 
-        // Should return the list
+    static getUserByID(){
+        
+    }
+
+    static remove(userid) {
+        let userFound = false;
+        users.forEach((user, index) => {
+            if (!userFound && user.userid === userid) {
+                users.splice(index, 1);
+                userFound = true;
+            }
+        });
+        if (!userFound) {
+            console.log("No Match Found");
+        }
     }
 }

@@ -111,7 +111,7 @@
 }
 
 /* Button Styling */
-.task-edit-button, .task-delete-button {
+.user-edit-button, .user-delete-button {
     background-color: #4caf50; /* Green background for buttons */
     color: #ffffff; /* White text color */
     border: none; /* Remove border */
@@ -120,14 +120,14 @@
     border-radius: 8px; /* Rounded corners */
 }
 
-.task-delete-button {
+.user-delete-button {
     background-color: #c74949; /* Red background for delete button */
 }
 
-.task-delete-button:hover {
+.user-delete-button:hover {
     background-color: #830f0f; /* Darker red on hover */
 }
 
-.task-edit-button:hover {
+.user-edit-button:hover {
     background-color: #065213; /* Darker green on hover */
 }

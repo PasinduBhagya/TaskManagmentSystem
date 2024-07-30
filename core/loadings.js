@@ -66,11 +66,20 @@ export function loadingRenderedUsers(users){
             <td class="users-td-col4">${user.username}</td>
             <td class="users-td-col5">${user.email}</td>
             <td class="users-td-col6">
-                <button class="task-edit-button" data-id="${user.userid}">Edit</button>
-                <button class="task-delete-button" data-id="${user.userid}">Delete</button>
+                <button class="user-edit-button" data-id="${user.userid}">Edit</button>
+                <button class="user-delete-button" data-id="${user.userid}">Delete</button>
             </td>
         `;
         usersTableBody.appendChild(row);
+    });
+
+    document.querySelectorAll('.user-delete-button').forEach(button => {
+        button.addEventListener('click', (eventuserDelete) => {
+            const userid = Number(eventuserDelete.target.getAttribute('data-id'));
+            Users.remove(userid)
+            const renderedusers = Users.getBySearch(document.getElementById('main-content-settings-user-management-user-search').value)
+            loadingRenderedUsers(renderedusers)     
+        });
     });
 }
 
@@ -140,5 +149,4 @@ export function loadingRenderedTasks(tasks) {
             renderFilteredTasks()        
         });
     });
-
 }
