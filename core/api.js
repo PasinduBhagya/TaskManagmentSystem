@@ -1,4 +1,5 @@
 import { clearUserInputs } from './utility.js';
+import { Tasks } from './tasks.js';
 let fetchData = [];
 
 export async function getAPIRequest(path) {
@@ -39,7 +40,7 @@ export function sendAPIRequest(task_name, task_status, task_assignee){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            assigneeid: task_assignee,
+            assigneeid: 3,
             name: task_name,
             status: task_status,
             jiraid: null,
@@ -48,7 +49,7 @@ export function sendAPIRequest(task_name, task_status, task_assignee){
             project: null
         })
     }).then(response => {
-        console.log(response)
+        Tasks.get()
         clearUserInputs()
     })
 }
@@ -63,23 +64,22 @@ export function sendAPIRequestDelete(taskid){
         },
         body: JSON.stringify({})
     }).then(response => {
-        console.log(response)
         clearUserInputs()
     })
 }
 
 export function sendAPIRequestUpdate(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus){
-    
-    const endpointIP = "http://192.168.8.103:8080/" + taskid
+
+    const endpointIP = "http://192.168.8.103:8080/api/tasks/" + taskid
     fetch(endpointIP, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-        "id": 1,
+            "id": 1,
         "assigneeid": updatedtaskassignee,
-        "name": updatedtaskname,
+        "name": updatedtaskname, 
         "project": "Homepage Redesign",
         "status": updatedtaskstatus,
         "jiraid": "JIRA-101",
@@ -90,17 +90,3 @@ export function sendAPIRequestUpdate(taskid, updatedtaskname, updatedtaskassigne
         clearUserInputs()
     })
 }
-
-
-// export async function sendAPIRequest(path) {
-    
-//     try {
-//         const response = await fetch(endpointIP + path);
-//         const data = await response.json();
-//         fetchData = data;
-//         return fetchData;
-//     } catch (error) {
-//         console.error('Error fetching data from the server:', error);
-//         return [];
-//     }
-// }

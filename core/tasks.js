@@ -7,11 +7,9 @@ export class Tasks {
         this.taskName = taskName;
         this.assignee = assignee;
         this.status = status;
-
     }
 
     static get() {
-
         getAPIRequest("/api/tasks").then(renderedTasks => {
             sessionStorage.setItem('taskData', JSON.stringify(renderedTasks));
             loadingRenderedTasks()
@@ -19,29 +17,18 @@ export class Tasks {
     }
 
     static add(task_name, task_status, task_assignee) {
-        getAPIRequest("/api/tasks").then(renderedTasks => {
-            sessionStorage.setItem('taskData', JSON.stringify(renderedTasks));
-            loadingRenderedTasks()
-        })
         sendAPIRequest(task_name, task_status, task_assignee)
-        Tasks.get()
-    }
-
-    static getTaskByID(taskid) {
-
-    }
-
-    static getWithFilters() {
-
     }
 
     static update(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus) {
-        sendAPIRequestUpdate('/api/tasks/' + taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus)
+        sendAPIRequestUpdate(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus)
+        getAPIRequest("/api/tasks").then(renderedTasks => {
+            sessionStorage.setItem('taskData', JSON.stringify(renderedTasks));
+        })
     }
 
     static remove(taskid) {
         sendAPIRequestDelete(taskid)
-        loadingRenderedTasks()
     }
 }
 
@@ -104,13 +91,11 @@ export async function loadingRenderedTasks() {
             const taskid = Number(eventEdit.target.getAttribute('data-id'));
 
             const updatedtaskname = (document.getElementById('taskname-' + taskid).innerText).trim()
-            const updatedtaskassignee = document.getElementById('taskassignee-' + taskid).value
-            const updatedtaskstatus = document.getElementById('taskstatus-' + taskid).value
+            const updatedtaskassignee = document.getElementById('taskassignee-' + taskid).value.trim()
+            const updatedtaskstatus = document.getElementById('taskstatus-' + taskid).value.trim()
 
             Tasks.update(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus)
-  
         });
-
     });
 
     document.querySelectorAll('.task-delete-button').forEach(button => {
