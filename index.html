@@ -1,130 +1,963 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management Console</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="./styles/settings.css">
-    <link rel="stylesheet" href="./styles/users.css">
-    <link rel="stylesheet" href="./styles/tasks.css">
-    <script type="module" src="./core/main.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Task Management System</title>
+  <script type="module" src="./core/main.js"></script>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+  <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+
+  <!-- Fonts and icons -->
+  <script src="./assets/js/plugin/webfont/webfont.min.js"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: [
+          "Font Awesome 5 Solid",
+          "Font Awesome 5 Regular",
+          "Font Awesome 5 Brands",
+          "simple-line-icons",
+        ],
+        urls: ["./assets/css/fonts.min.css"],
+      },
+      active: function () {
+        sessionStorage.fonts = true;
+      },
+    });
+  </script>
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="./assets/css/custom.css" />
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./assets/css/kaiadmin.min.css" />
+  <link rel="stylesheet" href="./assets/css/plugins.min.css" />
 </head>
-<body>
-    <div id="update-task-popup" class="update-task-popup">
-        <input type="text" id="update-task-name" name="taskname" placeholder="Enter your task here">
-        <div class="update-content-selector">
-            <select id="update-task-assignee" name="users">
-            </select>
-            <select id="task-update-status" name="status">
-                <option value="New-Task"> New Task</option>
-            </select>
-            <button id="task-update-button">Update</button>
-        </div>  
-        <span class="task-update-popup-close-button">&times;</span>
-    </div>
-    
-    <!-- User Add Hidden Form  -->
-     <div class="blur-background"></div>
-         <div id="new-user-add-popup" class="new-user-add-popup">
-            <h1>User Information</h1>
-             <input type="text" id="new-user-first-name" placeholder="First Name">
-             <input type="text" id="new-user-last-name" placeholder="Last Name">
-             <input type="text" id="new-user-username" placeholder="Username">
-             <input type="text" id="new-user-email" placeholder="Email Address">
-             <input type="text" id="new-user-jira-apikey" placeholder="JIRA API Key (Optional)">
-             
-             <div class="new-user-content-selector">
-                 <select id="new-user-groups" name="groups">
-                     <option value="default"> Select Group</option>
-                    </select>
-                    <select id="new-user-role" name="role">
-                        <option value="default"> Select Role</option>
-                    </select>
+
+<body class="custom-wrapper">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="wrapper">
+
+    <!-- Sidebar -->
+    <div class="sidebar" data-background-color="dark">
+      <div class="sidebar-logo">
+        <!-- Logo Header -->
+        <div class="logo-header" data-background-color="dark">
+          <a href="../index.html" class="logo">
+            <img src="./assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
+          </a>
+          <div class="nav-toggle">
+            <button class="btn btn-toggle toggle-sidebar">
+              <i class="gg-menu-right"></i>
+            </button>
+            <button class="btn btn-toggle sidenav-toggler">
+              <i class="gg-menu-left"></i>
+            </button>
+          </div>
+          <button class="topbar-toggler more">
+            <i class="gg-more-vertical-alt"></i>
+          </button>
+        </div>
+        <!-- End Logo Header -->
+      </div>
+      <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+          <ul class="nav nav-secondary">
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="./index.html" class="collapsed" aria-expanded="false">
+                <i class="fas fa-home"></i>
+                <p>Home</p>
+              </a>
+            </li>
+            <li class="nav-section">
+              <span class="sidebar-mini-icon">
+                <i class="fa fa-ellipsis-h"></i>
+              </span>
+              <div class="form-group">
+                <span class="h2">FILTERS</span>
+              </div>
+            </li>
+            <div id="task-filters">
+              <li class="nav-item">
+                <div class="form-group">
+                  <span class="h7">By User:</span>
                 </div>
-                <button id="new-user-add-button">Add</button>
-                <span class="new-user-add-close-button">&times;</span>
+                <div class="form-group">
+                  <select class="form-select form-control-md" id="task-filter-assingee">
+                    <option value="default">-- Select --</option>
+                  </select>
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="form-group">
+                  <span class="h7">By Status:</span>
+                </div>
+                <div class="form-group">
+                  <select class="form-select form-control-md" id="task-filter-status">
+                    <option value="default">-- Select --</option>
+                  </select>
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="form-group">
+                  <span class="h7">By Date:</span>
+                </div>
+                <div class="form-group">
+                  <input type="date" id="datePicker" name="datePicker" class="form-control form-control-md">
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="form-group">
+                  <span class="h7">By Group:</span>
+                </div>
+                <div class="form-group">
+                  <select class="form-select form-control-md" id="">
+                    <option value="default">-- Select --</option>
+                  </select>
+                </div>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="main-panel">
+      <!-- Main Header Starts Here -->
+      <div class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">Menu</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <button class="btn btn-primary" id="top_menu_tasks_button">Tasks</button>
+              </li>
+              <li class="nav-item ml-2">
+                <button id="top_menu_settings_button" class="btn btn-secondary">Settings</button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <!-- Main Header Endsr Here -->
+
+
+
+      <!-- Main Windows Content Starts Here -->
+      <div class="container">
+        <div class="page-inner">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- Add new Task Element -->
+          <div id="custom-class-tasks-information-element">
+            <div class="row">
+              <div class="col-12 col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Task Information</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-7">
+                        <input type="text" class="form-control" id="new-task" placeholder="Add a New Task" />
+                      </div>
+                      <div class="col-2">
+                        <select class="form-control" id="task-add-assignee">
+                          <option value="default">Select an Assignee</option>
+                        </select>
+                      </div>
+                      <div class="col-2">
+                        <select class="form-control" id="task-add-status">
+                          <option value="default"> Select a Status</option>
+                        </select>
+                      </div>
+                      <div class="col-1">
+                        <button class="btn btn-primary w-100" id="task-add-button">
+                          <span class="btn-label">
+                            <i class="fa fa-plus"></i>
+                          </span>
+                          Add
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add new Task Element / Update Task Element Ends here-->
+
+
+
+
+
+
+          <!-- Task Table -->
+
+          <div id="custom_class_all_tasks_table_element">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Tasks</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table id="tasks-datatables" class="display table table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th class="col-task-id">Task ID</th>
+                            <th class="col-task">Task</th>
+                            <th class="col-assignee">Assignee</th>
+                            <th class="col-status">Status</th>
+                            <th class="col-actions">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="taskTableBody">
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- Add new User Element / Update User Element Starts here-->
+          <div id="custom-class-user-information-element">
+
+            <div class="row row-demo-grid">
+              <div class="col-12 col-md-10">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">User Information</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="firstname">First Name</label>
+                          <input type="text" class="form-control" id="user-first-name" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="email2">Last Name</label>
+                          <input type="email" class="form-control" id="user-last-name" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="email2">Username</label>
+                          <input type="email" class="form-control" id="user-username" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="email2">Email Address</label>
+                          <input type="email" class="form-control" id="user-email" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-lg-12">
+                        <div class="form-group">
+                          <label for="email2">JIRA API</label>
+                          <input type="email" class="form-control" id="email2" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="email2">Groups</label>
+                          <input type="email" class="form-control" id="email2" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="email2">Role</label>
+                          <input type="email" class="form-control" id="email2" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-    <div class="top-menu">
-        <button id="top-menu-settings">Settings</button>
-        <button id="top-menu-tasks">Tasks</button>
-    </div>
-    <div class="side-menu-tasks">
+          </div>
 
-        <div class="task-filters" id="task-filters">
-            <label for="filters">Filters</label>
-            <select id="task-filter-assingee" name="task-filter-assingee">
-                <option value="default"> -- Assignee -- </option>
-            </select>
-            <select id="task-filter-status" name="task-filter-status">
-                <option value="default"> -- Status -- </option>
-            </select>
-            <input type="date" id="datePicker" name="datePicker">   
-        </div>
-    </div>
 
-    <div class="side-menu-settings">
-            <label for="Settings">Settings</label><br>
-            <button id="side-menu-settings-user-managment">User Management</button><br>
-            <button id="side-menu-settings-group-management">Group Management</button><br>
-            <button id="side-menu-settings-application-configuration">Application Configurations</button>
-            <button id="side-menu-settings-application-configuration">Layout Configurations</button>
-    </div>
 
-    <div class="main-content-tasks">
-        <div class="add-new-task-group">
-            <input type="text" id="new-task" name="taskname" placeholder="Type Your New Task"> 
-            <select id="new-task-add-assignee" name="users">
-                <option value="select-assignee">Select Assignee</option>
-            </select>
-            <select id="new-task-add-status" name="status">
-                <option value="New-Task"> New Task </option>
-            </select>
-            <button id="new-task-add-button"> Add </button>
-        </div>
-        <div class="table-wrapper">
-            <table class="tasks-table">
-                <thead class="tasks-table-thead">
-                    <tr class="tasks-table-thead-tr">
-                        <td class="tasks-th-col1">ID</td>
-                        <td class="tasks-th-col2">Task</td>
-                        <td class="tasks-th-col3">Assignee</td>
-                        <td class="tasks-th-col4">Status</td>
-                        <td class="tasks-th-col5">Actions</td>
-                    </tr>
-                </thead>
-                <tbody id="taskTableBody"></tbody>
-            </table>
-        </div>
-    </div>
-    <div class="main-content-setting-common">
-        <div class="main-content-settings-user-management">
-            <h1>User Related Settings</h1>
-            <input type="text" name="main-content-settings-user-management-user-search" id="main-content-settings-user-management-user-search" placeholder="Search">
-            <button id="new-user-add-pop-button">Add New User</button>
-            <div class="table-wrapper">
-                <table class="users-table">
-                    <thead class="users-table-thead">
-                        <tr class="users-table-thead-tr">
-                            <td class="users-th-col1">User ID</td>
-                            <td class="users-th-col2">First Name</td>
-                            <td class="users-th-col3">Last Name</td>
-                            <td class="users-th-col4">Username</td>
-                            <td class="users-th-col5">E-mail</td>
-                            <td class="users-th-col6">Actions</td>
-                        </tr>
-                    </thead>
-                    <tbody id="usersTableBody"></tbody>
-                </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- Group Information Starts Herer -->
+          <div id="custom-class-group-information-element">
+
+
+            <div class="row row-demo-grid">
+              <div class="col-12 col-md-10">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Group Information</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="email2">Group Name</label>
+                          <input type="email" class="form-control" id="email2" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="email2">Select Sub-Groups</label>
+                          <input type="email" class="form-control" id="email2" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="email2">Select Members</label>
+                          <input type="email" class="form-control" id="email2" />
+                          <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+          <!-- Group Information Ends Herer -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- Settings -->
+          <div id="custom-class-settings-element">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Settings</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <div class="col-12 col-md-12">
+                        <div class="card-body">
+                          <button id="settings_button_user_management" class="btn btn-secondary">Users
+                            Management</button>
+                          <button id="settings_button_group_management" class="btn btn-secondary">Group
+                            Management</button>
+                          <button id="settings_button_application_configuration" class="btn btn-secondary">Application
+                            Configurations</button>
+                          <button id="settings_button_layout" class="btn btn-secondary">Layout</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+          <!-- All users information table start here  -->
+          <div id="custom-class-all-user-information-element">
+
+            <div class="row">
+              <div class="col-md-6 col-lg-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <h4 class="card-title">Users</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <nav
+                            class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <button type="submit" class="btn btn-search pe-1">
+                                  <i class="fa fa-search search-icon"></i>
+                                </button>
+                              </div>
+                              <input type="text" placeholder="Search for a User" class="form-control"
+                                id="main-content-settings-user-management-user-search" />
+                            </div>
+                          </nav>
+                          <table id="basic-datatables" class="display table table-striped table-hover">
+                            <thead>
+                              <tr>
+                                <th>User ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>E-mail</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- All users information table end here  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- All Groups information table start here  -->
+          <div id="custom-class-all-groups-information-element">
+
+            <div class="row">
+              <div class="col-md-6 col-lg-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <h4 class="card-title">Groups</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <h1>Group Management</h1>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- All Groups information table end here  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- All Application Management start here  -->
+          <div id="custom-class-application-managment-element">
+
+            <div class="row">
+              <div class="col-md-6 col-lg-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <h4 class="card-title">Application Management</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <h1>Application Management</h1>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- All Application Management end here  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- layout information table start here  -->
+          <div id="custom-class-layout-element">
+
+            <div class="row">
+              <div class="col-md-6 col-lg-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <h4 class="card-title">Layout</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <h1>Layout</h1>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- layout information table end here  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
-        <div class="main-content-settings-group-management">
-            <h1>Group Related Settings</h1>
-        </div>
-        <div class="main-content-settings-application-configuration">
-            <h1>Application Related Settings</h1>
-        </div>
-    </div>
+
+
+
+
+
+        <footer class="footer">
+          <div class="container-fluid d-flex justify-content-between">
+            <nav class="pull-left">
+              <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="http://wwtesbdfbd.com">
+                    Test
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> dvsdvdsv </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> dvdsvsdv </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </footer>
+      </div> <!-- Wrapper Div Clase Tag -->
 </body>
+
 </html>
