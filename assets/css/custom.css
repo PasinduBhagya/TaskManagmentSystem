@@ -28,6 +28,10 @@
     display: none;
 }
 
+#custom_class_new_user_information_element{
+    display: none;
+}
+
 #custom_class_update_element{
     display: none;
     background-color: rgba(104, 102, 102, 0.9); /* 0.5 makes it 50% transparent */
@@ -67,4 +71,6 @@
     width: 15%;
   }
   
-  
+#user_update_button_area{
+    display: none;
+}

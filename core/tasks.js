@@ -1,4 +1,4 @@
-import { getAPIRequest, sendAPIRequest, sendAPIRequestDelete, sendAPIRequestUpdate } from './api.js'
+import { apiGet, apiPost, apiDelete, apiUpdate } from './api.js'
 
 export class Tasks {
 
@@ -8,33 +8,80 @@ export class Tasks {
         this.assignee = assignee;
         this.status = status;
     }
+    
+    static add(task_name, task_status, task_assignee) {
+        
+        const apirequestbody = {
+            assigneeid: task_assignee,
+            name: task_name,
+            status: task_status,
+            jiraid: null,
+            createddate: "1970-01-14",
+            completeddate: null,
+            project: null
+        }
+
+        apiPost('/api/tasks', apirequestbody)
+
+
+
+        Tasks.getFiltered()
+    }
 
     static get() {
-        getAPIRequest("/api/tasks").then(renderedTasks => {
+        apiGet("/api/tasks").then(renderedTasks => {
             sessionStorage.setItem('taskData', JSON.stringify(renderedTasks));
-            loadingRenderedTasks()
+            const tasks = JSON.parse(sessionStorage.getItem('taskData'));
+            loadingRenderedTasks(tasks)
         })
     }
 
-    static add(task_name, task_status, task_assignee) {
-        sendAPIRequest(task_name, task_status, task_assignee)
+    static getFiltered(){
+
+        const renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
+        const userFilterID = Number(sessionStorage.getItem('userFilterData'))
+        const statusFilter = sessionStorage.getItem('statusFilterData')
+
+        if (userFilterID === 0 && statusFilter === 'default' || userFilterID === 0 && statusFilter === null){
+            return Tasks.get()
+        }else if(userFilterID === 0 && statusFilter !== 'default'){
+            loadingRenderedTasks(renderedTasks.filter(task => task.task_status === statusFilter))
+        }else if(userFilterID !== 0 && statusFilter === 'default'){
+            loadingRenderedTasks(renderedTasks.filter(task => task.task_assingeeid === userFilterID))
+        }else if(userFilterID !== 0 && statusFilter !== 'default'){
+            loadingRenderedTasks(renderedTasks.filter(task => task.task_assingeeid === userFilterID && task.task_status === statusFilter))
+        }
+        console.log(userFilterID)
+        console.log(statusFilter)
     }
 
     static update(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus) {
-        sendAPIRequestUpdate(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus)
-        getAPIRequest("/api/tasks").then(renderedTasks => {
+
+        const apirequestbody = {
+                "id": taskid,
+                "assigneeid": updatedtaskassignee,
+                "name": updatedtaskname,
+                "project": "Homepage Redesign",
+                "status": updatedtaskstatus,
+                "jiraid": "JIRA-101",
+                "createddate": "2024-07-01",
+                "completeddate": "2024-07-10"
+        }
+
+        apiUpdate("/api/tasks/" + taskid, apirequestbody, updatedtaskname, updatedtaskassignee, updatedtaskstatus)
+        apiGet("/api/tasks").then(renderedTasks => {
             sessionStorage.setItem('taskData', JSON.stringify(renderedTasks));
         })
     }
 
     static remove(taskid) {
-        sendAPIRequestDelete(taskid)
+        apiDelete('/api/tasks/' + taskid)
+        Tasks.getFiltered()
     }
 }
 
-export async function loadingRenderedTasks() {
-
-    const renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
+export async function loadingRenderedTasks(renderedTasks) {
+     
     const renderedStatus = JSON.parse(sessionStorage.getItem('statusData'));
     const statusvalues = renderedStatus[0].parameters.split(',');
     const usersvalues = JSON.parse(sessionStorage.getItem('usersData'));
@@ -102,7 +149,7 @@ export async function loadingRenderedTasks() {
         button.addEventListener('click', (eventDelete) => {
 
             const taskid = Number(eventDelete.target.getAttribute('data-id'));
-            const renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
+            let renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
             let taskFound = false;
 
             renderedTasks.forEach((task, index) => {
@@ -110,12 +157,13 @@ export async function loadingRenderedTasks() {
                     renderedTasks.splice(index, 1);
                     taskFound = true;
                     sessionStorage.setItem('taskData', JSON.stringify(renderedTasks));
-                    loadingRenderedTasks()
+                    renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
                 }
             });
             if (!taskFound) {
                 console.log("No Match Found");
             }
+
             Tasks.remove(taskid)
         });
     });

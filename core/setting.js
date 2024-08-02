@@ -1,4 +1,4 @@
-import { getAPIRequest } from './api.js'
+import { apiGet } from './api.js'
 
 export class Settings{
     constructor(id, settingsname, settingsvalue){
@@ -7,7 +7,7 @@ export class Settings{
         this.settingsvalue = settingsvalue
     }
     static async get(){
-        getAPIRequest("/api/settings").then(renderedSettings => {
+        apiGet("/api/settings").then(renderedSettings => {
             this.load(renderedSettings)
             sessionStorage.setItem('statusData', JSON.stringify(renderedSettings));
             return renderedSettings

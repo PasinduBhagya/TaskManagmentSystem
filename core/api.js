@@ -1,11 +1,14 @@
 import { clearUserInputs } from './utility.js';
 import { Tasks } from './tasks.js';
+import { Users } from './users.js';
 let fetchData = [];
 
-export async function getAPIRequest(path) {
-    const endpointIP = "http://192.168.8.103:8080"
+const baseIPAddress = "http://129.146.135.223:8080"
+
+//////////////////////////////////////////////////////
+export async function apiGet(path) {
     try {
-        const response = await fetch(endpointIP + path);
+        const response = await fetch(baseIPAddress + path);
         const data = await response.json();
         fetchData = data;
         return fetchData;
@@ -13,80 +16,66 @@ export async function getAPIRequest(path) {
         console.error('Error fetching data from the server:', error);
         return [];
     }
-
 }
 
-export async function getItemAPIRequest(path) {
-    const endpointIP = "http://192.168.8.103:8080"
+//////////////////////////////////////////////////////
+export async function apiPost(path, apirequestbody) {
     try {
-        const response = await fetch(endpointIP + path);
+        const response = await fetch(baseIPAddress + path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(apirequestbody)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
         const data = await response.json();
-        fetchData = data;
-                
-        return fetchData;
+        return data;
     } catch (error) {
-        console.error('Error fetching data from the server:', error);
-        return [];
+        console.error('There has been a problem with your fetch operation:', error);
+        throw error;
+    }
+}
+//////////////////////////////////////////////////////
+export async function apiDelete(path) {
+    try {
+        const response = await fetch(baseIPAddress + path, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error("Response not Ok");
+        }
+    } catch (error) {
+        console.log("Error Occured during the deleting process")
+        throw error;
+    }
+}
+//////////////////////////////////////////////////////
+
+export async function apiUpdate(path, apirequestbody) {
+
+    try {
+        const response = await fetch(baseIPAddress + path, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(apirequestbody)
+        })
+        if (!response.ok){
+            throw new Error("Response not Ok");
+        }
+    }catch(error){
+        console.log("Error Occured during the updating process")
+        throw error;
     }
 
 }
-
-export function sendAPIRequest(task_name, task_status, task_assignee){
-    
-    const endpointIP = "http://192.168.8.103:8080/api/tasks"
-    fetch(endpointIP, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            assigneeid: 3,
-            name: task_name,
-            status: task_status,
-            jiraid: null,
-            createddate : "1970-01-14",
-            completeddate : null,
-            project: null
-        })
-    }).then(response => {
-        Tasks.get()
-        clearUserInputs()
-    })
-}
-
-export function sendAPIRequestDelete(taskid){
-    
-    const endpointIP = "http://192.168.8.103:8080/api/tasks/" + taskid
-    fetch(endpointIP, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({})
-    }).then(response => {
-        clearUserInputs()
-    })
-}
-
-export function sendAPIRequestUpdate(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus){
-
-    const endpointIP = "http://192.168.8.103:8080/api/tasks/" + taskid
-    fetch(endpointIP, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "id": 1,
-        "assigneeid": updatedtaskassignee,
-        "name": updatedtaskname, 
-        "project": "Homepage Redesign",
-        "status": updatedtaskstatus,
-        "jiraid": "JIRA-101",
-        "createddate": "2024-07-01",
-        "completeddate": "2024-07-10"
-        })
-    }).then(response => {
-        clearUserInputs()
-    })
-}
+//////////////////////////////////////////////////////
