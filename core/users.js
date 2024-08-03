@@ -1,5 +1,4 @@
 import { apiPost, apiGet, apiUpdate, apiDelete } from './api.js'
-import { Tasks } from './tasks.js'
 
 export class Users {
     constructor(userid, firstname, lastname, username, email) {
@@ -25,18 +24,19 @@ export class Users {
         Users.get()
     }
 
+    static load(searchuser){
+        const users = JSON.parse(sessionStorage.getItem('usersData'));
+        const pattern = new RegExp(searchuser.toLocaleLowerCase())
+        const filteredUsers = users.filter(user => pattern.test(user.firstname.toLocaleLowerCase()) || pattern.test(user.lastname.toLocaleLowerCase()) ||  pattern.test(user.email.toLocaleLowerCase()))
+        loadingRenderedUsers(filteredUsers)
+    }
+
     static get() {
         apiGet("/api/users").then(renderedusers => {
             sessionStorage.setItem('usersData', JSON.stringify(renderedusers));
             const users = JSON.parse(sessionStorage.getItem('usersData'));
             loadingRenderedUsers(users)
         })
-    }
-
-    static getBySearch(searchvalue) { }
-
-    static getUserByID(updateuserid) {
-
     }
 
     static update(userid, firstname, lastname, email, apikey, jirauserid, addedgroups, assignedrole) {
@@ -73,9 +73,9 @@ export function loadingRenderedUsers(users) {
             <td class="users-td-col2">${user.firstname}</td>
             <td class="users-td-col3">${user.lastname}</td>
             <td class="users-td-col5">${user.email}</td>
-            <td class="users-td-col6">
-                <button class="user-edit-button btn btn-primary" data-id="${user.id}">Edit</button>
-                <button class="user-delete-button btn btn-danger" data-id="${user.id}">Delete</button>
+            <td class="users-td-col6 col-user-actions">
+                <button class="user-edit-button btn btn-primary btn-sm" data-id="${user.id}"><i class="icon-pencil"></i></button>
+                <button class="user-delete-button btn btn-danger btn-sm" data-id="${user.id}"><i class="icon-trash"></i></button>
             </td>
         `;
         usersTableBody.appendChild(row);
@@ -119,7 +119,7 @@ export function loadingRenderedUsers(users) {
                         updateButtonEvent.preventDefault();
 
                         try {
-                            await Users.update(
+                            Users.update(
                                 userid,
                                 document.getElementById('new_user_firstname').value,
                                 document.getElementById('new_user_lastname').value,
@@ -140,10 +140,7 @@ export function loadingRenderedUsers(users) {
                     console.error('Failed to fetch user data:', error);
                 }
             }
-
             getUserData(userid);
-
-
         });
     });
 }

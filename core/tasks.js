@@ -8,9 +8,9 @@ export class Tasks {
         this.assignee = assignee;
         this.status = status;
     }
-    
-    static add(task_name, task_status, task_assignee) {
-        
+
+    static add(task_name, task_status, task_assignee, createjiraforme, task_project) {
+
         const apirequestbody = {
             assigneeid: task_assignee,
             name: task_name,
@@ -18,14 +18,15 @@ export class Tasks {
             jiraid: null,
             createddate: "1970-01-14",
             completeddate: null,
-            project: null
+            project: task_project,
+            createjiraforme: createjiraforme
         }
+        async function load() {
+            apiPost('/api/tasks', apirequestbody)
+            Tasks.get()
+        }
+        load()
 
-        apiPost('/api/tasks', apirequestbody)
-
-
-
-        Tasks.getFiltered()
     }
 
     static get() {
@@ -36,36 +37,49 @@ export class Tasks {
         })
     }
 
-    static getFiltered(){
+    static getByDate(selecteddate) {
+        apiGet("/api/tasks/bydate/" + selecteddate).then(renderedTasks => {
+            loadingRenderedTasks(renderedTasks)
+        })
+    }
+
+
+    static getFiltered() {
 
         const renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
-        const userFilterID = Number(sessionStorage.getItem('userFilterData'))
-        const statusFilter = sessionStorage.getItem('statusFilterData')
+        const userFilterID = Number(sessionStorage.getItem('userFilterData'));
+        const statusFilter = sessionStorage.getItem('statusFilterData');
+        const dateFilter = sessionStorage.getItem('dateFilterData');
 
-        if (userFilterID === 0 && statusFilter === 'default' || userFilterID === 0 && statusFilter === null){
-            return Tasks.get()
-        }else if(userFilterID === 0 && statusFilter !== 'default'){
-            loadingRenderedTasks(renderedTasks.filter(task => task.task_status === statusFilter))
-        }else if(userFilterID !== 0 && statusFilter === 'default'){
-            loadingRenderedTasks(renderedTasks.filter(task => task.task_assingeeid === userFilterID))
-        }else if(userFilterID !== 0 && statusFilter !== 'default'){
-            loadingRenderedTasks(renderedTasks.filter(task => task.task_assingeeid === userFilterID && task.task_status === statusFilter))
+        let filteredTasks = renderedTasks;
+
+        if (userFilterID !== 0) {
+            filteredTasks = filteredTasks.filter(task => task.task_assingeeid === userFilterID);
+            console.log(userFilterID)
         }
-        console.log(userFilterID)
-        console.log(statusFilter)
+        if (statusFilter !== 'default') {
+            filteredTasks = filteredTasks.filter(task => task.task_status === statusFilter);
+        }
+        if (dateFilter !== new Date().toISOString().split('T')[0]) {
+            filteredTasks = filteredTasks.filter(task => task.task_completeddate === dateFilter);
+        }
+        if (userFilterID === 0 && statusFilter === 'default' && dateFilter === new Date().toISOString().split('T')[0] || dateFilter === "") {
+            filteredTasks = renderedTasks;
+        }
+        loadingRenderedTasks(filteredTasks)
     }
 
     static update(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus) {
 
         const apirequestbody = {
-                "id": taskid,
-                "assigneeid": updatedtaskassignee,
-                "name": updatedtaskname,
-                "project": "Homepage Redesign",
-                "status": updatedtaskstatus,
-                "jiraid": "JIRA-101",
-                "createddate": "2024-07-01",
-                "completeddate": "2024-07-10"
+            "id": taskid,
+            "assigneeid": updatedtaskassignee,
+            "name": updatedtaskname,
+            "project": "Homepage Redesign",
+            "status": updatedtaskstatus,
+            "jiraid": "JIRA-101",
+            "createddate": "2024-07-01",
+            "completeddate": "2024-07-10"
         }
 
         apiUpdate("/api/tasks/" + taskid, apirequestbody, updatedtaskname, updatedtaskassignee, updatedtaskstatus)
@@ -81,8 +95,11 @@ export class Tasks {
 }
 
 export async function loadingRenderedTasks(renderedTasks) {
-     
+
     const renderedStatus = JSON.parse(sessionStorage.getItem('statusData'));
+    // if (renderedStatus[0] === undefined) {
+    //     location.reload()
+    // }
     const statusvalues = renderedStatus[0].parameters.split(',');
     const usersvalues = JSON.parse(sessionStorage.getItem('usersData'));
 
@@ -90,12 +107,13 @@ export async function loadingRenderedTasks(renderedTasks) {
     taskTableBody.innerHTML = '';
 
     renderedTasks.forEach(task => {
+        console.log(task.task_assigneeid)
 
         let statusDropdown = `<select class="form-select form-control-md" id="taskstatus-${task.task_id}">`;
         statusvalues.forEach(value => {
-            if (task.task_status === value){
+            if (task.task_status === value) {
                 statusDropdown += `<option value="${value}" selected>${value}</option>`
-            }else{
+            } else {
                 statusDropdown += `<option value="${value}">${value}</option>`
             }
         });
@@ -104,19 +122,38 @@ export async function loadingRenderedTasks(renderedTasks) {
         
         let usersDropdown = `<select class="form-select form-control-md" id="taskassignee-${task.task_id}">`;
         usersvalues.forEach(user => {
-            if (task.task_assingeeid === user.id){
+            console.log(`${user.firstname} ${user.lastname}`)
+            if (task.task_assigneeid === user.id) {
+                console.log(`Checking ${task.task_assigneeid} and ${user.id}`)
                 usersDropdown += `<option value="${user.id}" selected>${user.firstname} ${user.lastname}</option>`
-            }else{
-                usersDropdown += `<option value="${user.id}">${user.firstname} ${user.lastname}</option>` 
+            } else {
+                console.log(`Checking ${task.task_assigneeid} and ${user.id}`)
+                usersDropdown += `<option value="${user.id}">${user.firstname} ${user.lastname}</option>`
             }
         });
         usersDropdown += '</select>';
 
+        const jiraweburl = "https://pbp971216.atlassian.net/browse/"
 
         let row = document.createElement('tr');
         row.className = "tasks-table-tdata-tr";
         row.innerHTML = `
-        <td class="table-success" scope="row">${task.task_id}</td>
+        <td class="table-success" scope="row">
+            <div class="btn-group dropdown">
+                    <b>
+                        ${task.task_id}
+                    </b>
+                <ul class="dropdown-menu p-3" role="menu">
+                    <li>
+                        <p><b>Go to - </b><a href="${jiraweburl}${task.task_jiraid}" target="_blank">${task.task_jiraid}</a></p>
+                        <div class="dropdown-divider"></div>
+                        <p><b>Project - </b>${task.task_project}</p>
+                        <p><b>Created Date - </b>${task.task_createddate}</p>
+                        <p><b>Completed Date - </b>${task.task_completeddate}</p>
+                    </li>
+                </ul>
+            </div>
+        </td>
         <td name="taskname" id="taskname-${task.task_id}" class="table-warning">${task.task_name}</td>
         <td>
             ${usersDropdown}
@@ -124,16 +161,16 @@ export async function loadingRenderedTasks(renderedTasks) {
         <td id="status">
             ${statusDropdown}
         </td>
-        <td>
-            <button class="task-sumit-button" data-id="${task.task_id}">Submit</button>
-            <button class="task-delete-button" data-id="${task.task_id}">Delete</button>
+        <td style="text-align: center">
+            <button class="task-submit-button btn btn-secondary btn-sm" data-id="${task.task_id}"><i class="icon-check"></i></button>
+            <button class="task-delete-button btn btn-danger btn-sm" data-id="${task.task_id}"><i class="icon-trash"></i></button>
         </td>
-    `;
+            `;
         taskTableBody.appendChild(row);
     });
 
 
-    document.querySelectorAll('.task-sumit-button').forEach(button => {
+    document.querySelectorAll('.task-submit-button').forEach(button => {
         button.addEventListener('click', (eventEdit) => {
             const taskid = Number(eventEdit.target.getAttribute('data-id'));
 

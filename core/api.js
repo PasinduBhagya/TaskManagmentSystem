@@ -1,9 +1,6 @@
-import { clearUserInputs } from './utility.js';
-import { Tasks } from './tasks.js';
-import { Users } from './users.js';
 let fetchData = [];
 
-const baseIPAddress = "http://129.146.135.223:8080"
+const baseIPAddress = "http://192.168.8.104:8080"
 
 //////////////////////////////////////////////////////
 export async function apiGet(path) {
@@ -40,24 +37,9 @@ export async function apiPost(path, apirequestbody) {
         throw error;
     }
 }
+
 //////////////////////////////////////////////////////
-export async function apiDelete(path) {
-    try {
-        const response = await fetch(baseIPAddress + path, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        if (!response.ok) {
-            throw new Error("Response not Ok");
-        }
-    } catch (error) {
-        console.log("Error Occured during the deleting process")
-        throw error;
-    }
-}
-//////////////////////////////////////////////////////
+
 
 export async function apiUpdate(path, apirequestbody) {
 
@@ -74,8 +56,27 @@ export async function apiUpdate(path, apirequestbody) {
         }
     }catch(error){
         console.log("Error Occured during the updating process")
-        throw error;
     }
 
+}
+
+
+
+//////////////////////////////////////////////////////
+export async function apiDelete(path) {
+    try {
+        const response = await fetch(baseIPAddress + path, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            // throw new Error("Response not Ok");
+        }
+    } catch (error) {
+        console.log("Error Occured during the deleting process")
+        throw error;
+    }
 }
 //////////////////////////////////////////////////////

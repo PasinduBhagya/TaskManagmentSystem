@@ -51,26 +51,69 @@
     right: 0;
 }
 
+/* Tasks */
+
 .col-task-id {
-    width: 10%;
+    width: 5%;
   }
   
-  .col-task {
-    width: 50%;
+.col-task {
+    width: 52%;
   }
   
-  .col-assignee {
+.col-assignee {
     width: 15%;
   }
   
-  .col-status {
+.col-status {
+    width: 13%;
+  }
+  
+.col-actions {
+    width: 20%;
+    text-align: center;
+  }
+
+
+/* Users */
+
+.col-user-id {
     width: 10%;
   }
   
-  .col-actions {
+.col-user-firstname {
     width: 15%;
   }
   
+.col-user-lastname {
+    width: 15%;
+  }
+  
+.col-user-email {
+    width: 45%;
+  }
+  
+.col-user-actions {
+    width: 15%;
+    text-align: center;
+  }
 #user_update_button_area{
     display: none;
 }
+
+.dropdown-menu {
+    width: 400px;
+    display: none;
+    cursor: pointer;
+}
+
+.btn-group:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.input-group-text {
+    width: 150px;
+    text-align: center; 
+}
+

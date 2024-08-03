@@ -10,6 +10,13 @@
 
   <!-- Fonts and icons -->
   <script src="./assets/js/plugin/webfont/webfont.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+
   <script>
     WebFont.load({
       google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -138,17 +145,7 @@
                   <span class="h7">By Date:</span>
                 </div>
                 <div class="form-group">
-                  <input type="date" id="datePicker" name="datePicker" class="form-control form-control-md">
-                </div>
-              </li>
-              <li class="nav-item">
-                <div class="form-group">
-                  <span class="h7">By Group:</span>
-                </div>
-                <div class="form-group">
-                  <select class="form-select form-control-md" id="">
-                    <option value="default">-- Select --</option>
-                  </select>
+                  <input type="date" id="task_filter_date" name="datePicker" class="form-control form-control-md">
                 </div>
               </li>
             </div>
@@ -225,10 +222,10 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
-                <button class="btn btn-primary" id="top_menu_tasks_button">Tasks</button>
+                <button class="btn btn-primary" id="top_menu_tasks_button"><i class="icon-list"></i></button>
               </li>
               <li class="nav-item ml-2">
-                <button id="top_menu_settings_button" class="btn btn-secondary">Settings</button>
+                <button id="top_menu_settings_button" class="btn btn-primary"><i class="icon-settings"></i></button>
               </li>
             </ul>
           </div>
@@ -258,6 +255,7 @@
 
 
           <!-- Add new Task Element -->
+          <!-- Add new Task Element -->
           <div id="custom-class-tasks-information-element">
             <div class="row">
               <div class="col-12 col-md-12">
@@ -266,8 +264,8 @@
                     <h4 class="card-title">Task Information</h4>
                   </div>
                   <div class="card-body">
-                    <div class="row">
-                      <div class="col-7">
+                    <div class="row mb-3">
+                      <div class="col-6">
                         <input type="text" class="form-control" id="new-task" placeholder="Add a New Task" />
                       </div>
                       <div class="col-2">
@@ -280,8 +278,23 @@
                           <option value="default"> Select a Status</option>
                         </select>
                       </div>
-                      <div class="col-1">
-                        <button class="btn btn-primary w-100" id="task-add-button">
+                      <div class="col-2">
+                        <select class="form-control" id="task-add-project">
+                          <option value="default">Select Project</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="createjiraforme" checked />
+                          <label class="form-check-label" for="createjiraforme">
+                            Create JIRA for me
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-3 text-end">
+                        <button class="btn btn-primary w-15" id="task-add-button">
                           <span class="btn-label">
                             <i class="fa fa-plus"></i>
                           </span>
@@ -294,6 +307,7 @@
               </div>
             </div>
           </div>
+
 
           <!-- Add new Task Element / Update Task Element Ends here-->
 
@@ -312,11 +326,11 @@
                     <h4 class="card-title">Tasks</h4>
                   </div>
                   <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="">
                       <table id="tasks-datatables" class="display table table-striped table-hover">
                         <thead>
-                          <tr>
-                            <th class="col-task-id">Task ID</th>
+                          <tr style="text-align: center;">
+                            <th class="col-task-id">ID</th>
                             <th class="col-task">Task</th>
                             <th class="col-assignee">Assignee</th>
                             <th class="col-status">Status</th>
@@ -540,15 +554,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
           <!-- Settings -->
           <div id="custom-class-settings-element">
             <div class="row">
@@ -563,11 +568,8 @@
                         <div class="card-body">
                           <button id="settings_button_user_management" class="btn btn-secondary">Users
                             Management</button>
-                          <button id="settings_button_group_management" class="btn btn-secondary">Group
-                            Management</button>
                           <button id="settings_button_application_configuration" class="btn btn-secondary">Application
                             Configurations</button>
-                          <button id="settings_button_layout" class="btn btn-secondary">Layout</button>
                         </div>
                       </div>
                     </div>
@@ -780,11 +782,11 @@
                           <table id="basic-datatables" class="display table table-striped table-hover">
                             <thead>
                               <tr>
-                                <th>User ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>E-mail</th>
-                                <th>Actions</th>
+                                <th class="col-user-id">User ID</th>
+                                <th class="col-user-firstname">First Name</th>
+                                <th class="col-user-lastname">Last Name</th>
+                                <th class="col-user-email">E-mail</th>
+                                <th class="col-user-actions">Actions</th>
                               </tr>
                             </thead>
                             <tbody id="usersTableBody">
@@ -814,33 +816,6 @@
 
 
 
-          <!-- All Groups information table start here  -->
-          <div id="custom-class-all-groups-information-element">
-
-            <div class="row">
-              <div class="col-md-6 col-lg-12">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="card">
-                      <div class="card-header">
-                        <h4 class="card-title">Groups</h4>
-                      </div>
-                      <div class="card-body">
-                        <div class="table-responsive">
-                          <h1>Group Management</h1>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- All Groups information table end here  -->
-
-
-
-
 
 
 
@@ -862,8 +837,44 @@
                         <h4 class="card-title">Application Management</h4>
                       </div>
                       <div class="card-body">
-                        <div class="table-responsive">
-                          <h1>Application Management</h1>
+                        <div class="card-header">
+                          <h4 class="card-title">JIRA</h4>
+                        </div>
+                        <div class="form-group">
+                          <div class="input-group mb-3">
+                            <span class="input-group-text" id="">Web URL</span>
+                            <input id="jira_web_url" type="text" class="form-control" placeholder="Ex:- https://example.com"
+                              aria-label="jiraweburl" aria-describedby="basic-addon1" />
+                          </div>
+                          <div class="input-group mb-3">
+                            <span class="input-group-text" id="">API URL</span>
+                            <input id="jira_api_url" type="text" class="form-control" placeholder="Ex:- https://example.com"
+                              aria-label="jiraapiurl" aria-describedby="basic-addon1" />
+                          </div>
+                          <div class="input-group mb-3">
+                            <span class="input-group-text" id="">API Key</span>
+                            <input id="jira_api_key" type="text" class="form-control" placeholder="API Key"
+                              aria-label="jira_api_key" aria-describedby="basic-addon1" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="card-header">
+                            <h4 class="card-title">Application</h4>
+                          </div>
+                          <div class="input-group mb-3">
+                            <span class="input-group-text" id="">Projects</span>
+                            <input id="jira_projects" type="text" class="form-control" placeholder="Projects"
+                              aria-label="jira_projects" aria-describedby="basic-addon1" />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3 col-lg-2" id="">
+                            <div class="form-group">
+                              <button class="btn btn-primary" id="application_manger_save_changes_button">
+                                Save Changes
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
