@@ -16,9 +16,12 @@ window.addEventListener("DOMContentLoaded", () =>{
     clearUserInputs()
     
     const users = JSON.parse(sessionStorage.getItem('usersData'));
-    // if (users === null){
-    //     location.reload()
-    // }
+    if (users === null){
+        setTimeout(() => {
+            location.reload()
+        }, 1500);
+
+    }
     loadingUserSelection(users)
 })
 
