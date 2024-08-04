@@ -117,3 +117,8 @@
     text-align: center; 
 }
 
+#error_message_task_add{
+    display: none;
+    color: rgb(238, 0, 0);
+
+}

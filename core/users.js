@@ -21,7 +21,9 @@ export class Users {
             jirauserid: jirauserid
         }
         apiPost("/api/users", apirequestbody)
-        Users.get()
+        setTimeout(() => {
+            Users.get()
+        }, 500);
     }
 
     static load(searchuser){
@@ -53,11 +55,16 @@ export class Users {
         }
 
         apiUpdate("/api/users/" + userid, apirequestbody)
+        setTimeout(() => {
+            Users.get()
+        }, 500);
     }
 
     static remove(userid) {
         apiDelete("/api/users/" + userid)
-        Users.get()
+        setTimeout(() => {
+            Users.get()
+        }, 500);
     }
 }
 
@@ -74,8 +81,8 @@ export function loadingRenderedUsers(users) {
             <td class="users-td-col3">${user.lastname}</td>
             <td class="users-td-col5">${user.email}</td>
             <td class="users-td-col6 col-user-actions">
-                <button class="user-edit-button btn btn-primary btn-sm" data-id="${user.id}"><i class="icon-pencil"></i></button>
-                <button class="user-delete-button btn btn-danger btn-sm" data-id="${user.id}"><i class="icon-trash"></i></button>
+                <button class="user-edit-button btn btn-primary btn-sm" data-id="${user.id}">Edit</button>
+                <button class="user-delete-button btn btn-danger btn-sm" data-id="${user.id}">Delete</button>
             </td>
         `;
         usersTableBody.appendChild(row);
@@ -94,8 +101,7 @@ export function loadingRenderedUsers(users) {
             async function getUserData(userid) {
                 try {
                     const usertoupdate = await apiGet('/api/users/' + userid);
-                    console.log(usertoupdate.addedgroups);
-
+    
                     document.getElementById('new_user_firstname').value = usertoupdate.firstname;
                     document.getElementById('new_user_lastname').value = usertoupdate.lastname;
                     document.getElementById('new_user_email').value = usertoupdate.email;

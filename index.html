@@ -81,35 +81,9 @@
   <div class="wrapper">
     <!-- Sidebar -->
     <div class="sidebar" data-background-color="dark">
-      <div class="sidebar-logo">
-        <!-- Logo Header -->
-        <div class="logo-header" data-background-color="dark">
-          <a href="../index.html" class="logo">
-            <img src="./assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
-          </a>
-          <div class="nav-toggle">
-            <button class="btn btn-toggle toggle-sidebar">
-              <i class="gg-menu-right"></i>
-            </button>
-            <button class="btn btn-toggle sidenav-toggler">
-              <i class="gg-menu-left"></i>
-            </button>
-          </div>
-          <button class="topbar-toggler more">
-            <i class="gg-more-vertical-alt"></i>
-          </button>
-        </div>
-        <!-- End Logo Header -->
-      </div>
       <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
           <ul class="nav nav-secondary">
-            <li class="nav-item">
-              <a data-bs-toggle="collapse" href="./index.html" class="collapsed" aria-expanded="false">
-                <i class="fas fa-home"></i>
-                <p>Home</p>
-              </a>
-            </li>
             <li class="nav-section">
               <span class="sidebar-mini-icon">
                 <i class="fa fa-ellipsis-h"></i>
@@ -119,7 +93,7 @@
               </div>
             </li>
             <div id="task-filters">
-              <div id="select_status_area">
+              
                 <li class="nav-item">
                   <div class="form-group">
                     <span class="h7">By User:</span>
@@ -130,6 +104,7 @@
                     </select>
                   </div>
                 </li>
+                <div id="select_status_area">
                 <li class="nav-item">
                   <div class="form-group">
                     <span class="h7">By Status:</span>
@@ -149,6 +124,7 @@
                   <span class="h2">HISTORY</span>
                 </div>
               </li>
+            </div>
               <li class="nav-item">
                 <div class="form-group">
                   <span class="h7">Pick a Date:</span>
@@ -157,7 +133,7 @@
                   <input type="date" id="task_filter_date" name="datePicker" class="form-control form-control-md">
                 </div>
               </li>
-            </div>
+            
           </ul>
         </div>
       </div>
@@ -276,6 +252,15 @@
                     <div class="row mb-3">
                       <div class="col-6">
                         <input type="text" class="form-control" id="new-task" placeholder="Add a New Task" />
+                        <div class="row" id="error_message_task_add">
+                          <div class="col-9">
+                            <div class="form-check">
+                              <small for="fillalldata">
+                                Please select all required information...
+                              </small>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div class="col-2">
                         <select class="form-control" id="task-add-assignee">
@@ -311,6 +296,7 @@
                         </button>
                       </div>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -651,7 +637,7 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-6 col-lg-12">
+                        <div class="col-md-6 col-lg-12" style="display: none;">
                           <div class="form-group">
                             <label for="jiraapikey">JIRA API</label>
                             <input type="text" class="form-control" id="new_user_jiraapikey" />
@@ -668,7 +654,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row">
+                      <div class="row" style="display: none;">
                         <div class="col-md-6 col-lg-6">
                           <div class="form-group">
                             <label for="groups">Groups</label>
@@ -864,7 +850,7 @@
                           </div>
                           <div class="input-group mb-3">
                             <span class="input-group-text" id="">API Key</span>
-                            <input id="jira_api_key" type="text" class="form-control" placeholder="API Key"
+                            <input id="jira_api_key" type="password" class="form-control" placeholder="API Key"
                               aria-label="jira_api_key" aria-describedby="basic-addon1" />
                           </div>
                         </div>

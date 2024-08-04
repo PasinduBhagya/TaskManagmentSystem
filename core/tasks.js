@@ -42,14 +42,20 @@ export class Tasks {
         })
     }
 
-    static getFiltered() {
-        let renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
-        
+    static getFiltered(selectedDate) {
+           
         const userFilterID = Number(sessionStorage.getItem('userFilterData'));
         const statusFilter = sessionStorage.getItem('statusFilterData');
 
+        let renderedTasks = []
+
+        if (selectedDate != ""){
+            renderedTasks = JSON.parse(sessionStorage.getItem('filteredDateTaskData'));
+        }else{
+            renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
+        } 
         let filteredTasks = renderedTasks;
-            
+        
         if (userFilterID !== 0) {
             filteredTasks = filteredTasks.filter(task => task.task_assigneeid === userFilterID);
         }
@@ -120,7 +126,7 @@ export async function loadingRenderedTasks(renderedTasks) {
         });
         usersDropdown += '</select>';
 
-        const jiraweburl = "https://pbp971216.atlassian.net/browse/"
+        const jiraweburl = JSON.parse(sessionStorage.getItem('statusData'))[1]['parameters'];
 
         let row = document.createElement('tr');
         row.className = "tasks-table-tdata-tr";

@@ -100,13 +100,19 @@ export function readElements(){
         const task_assignee = document.getElementById('task-add-assignee').value.trim()
         const task_project = document.getElementById('task-add-project').value.trim()
         const createjiraforme = document.getElementById('createjiraforme').checked
-        Tasks.add(task_name, task_status, task_assignee, createjiraforme, task_project)
+
+        if (task_status !== "default" && task_name !== "" & task_assignee !== "default" & task_project !== "default"){
+            Tasks.add(task_name, task_status, task_assignee, createjiraforme, task_project)
+        }else{
+            document.getElementById('error_message_task_add').style.display = 'block'
+        }
     }
 
     task_filters.addEventListener('change', ()=>{
         sessionStorage.setItem('userFilterData', Number(task_filter_assingee.value));
         sessionStorage.setItem('statusFilterData', task_filter_status.value);
-        Tasks.getFiltered()
+
+        Tasks.getFiltered(task_filter_date.value)
     })
 
     add_new_user.onclick = () =>{
@@ -160,6 +166,7 @@ export function readElements(){
         else{
             Tasks.getByDate(task_filter_date.value)
             document.getElementById('select_status_area').style.display = 'none';
+            document.getElementById('task-filter-status').value = 'default';
         }
     })
 

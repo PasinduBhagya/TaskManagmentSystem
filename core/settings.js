@@ -15,10 +15,6 @@ export class Settings{
     }
 
     static update(jira_web_url, jira_api_url, jira_api_key, jira_projects){
-        console.log(jira_web_url)
-        console.log(jira_api_url)
-        console.log(jira_api_key)
-        console.log(jira_projects)
         const apiBody = {
             jiraweburl: jira_web_url,
             jiraapiurl: jira_api_url,

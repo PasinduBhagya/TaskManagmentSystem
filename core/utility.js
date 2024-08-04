@@ -11,4 +11,7 @@ export function clearUserInputs(){
     document.getElementById('addnewuserform').reset();
 
     document.getElementById('user-search').value = '';
+    document.getElementById('error_message_task_add').style.display = 'none';
+
+    document.getElementById('task_filter_date').value = ""
 }
