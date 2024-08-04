@@ -32,7 +32,9 @@ export function readElements(){
     const task_filter_status = document.getElementById('task-filter-status')
     const task_filter_date = document.getElementById('task_filter_date')
 
-    task_filter_date.value = new Date().toISOString().split('T')[0];
+    // task_filter_date.value = new Date().toISOString().split('T')[0];
+    // let timetest = new Date().toISOString().split('T')[0]
+    // console.log(timetest)
 
     const add_new_user_confirm_area = document.getElementById('add_new_user_confirm_area')
     const user_update_button_area = document.getElementById('user_update_button_area')
@@ -68,6 +70,7 @@ export function readElements(){
 
     top_menu_tasks_button.addEventListener('click', () => {
         removeAllElements()
+        clearUserInputs()
         Tasks.get()
         custom_class_all_tasks_table_element.style.display = 'block'
         custom_class_tasks_information_element.style.display = 'block'
@@ -91,6 +94,7 @@ export function readElements(){
     })
 
     task_add_button.onclick = () =>{
+        
         const task_status = document.getElementById('task-add-status').value.trim()
         const task_name = document.getElementById('new-task').value.trim()
         const task_assignee = document.getElementById('task-add-assignee').value.trim()
@@ -149,11 +153,20 @@ export function readElements(){
     }
 
     task_filter_date.addEventListener('change', () => {
-        console.log(Date().toString().split('T')[0])
-        if(task_filter_date.value == "" || task_filter_date.value == new Date().toISOString().split('T')[0])
+        if(task_filter_date.value == "" || task_filter_date.value == new Date().toISOString().split('T')[0]){
+            document.getElementById('select_status_area').style.display = 'block';
             Tasks.get()
+        }
         else{
             Tasks.getByDate(task_filter_date.value)
+            document.getElementById('select_status_area').style.display = 'none';
         }
     })
+
+    
+
+
+
+
+
 }

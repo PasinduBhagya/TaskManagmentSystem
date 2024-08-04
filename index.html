@@ -79,7 +79,6 @@
 
 
   <div class="wrapper">
-
     <!-- Sidebar -->
     <div class="sidebar" data-background-color="dark">
       <div class="sidebar-logo">
@@ -120,29 +119,39 @@
               </div>
             </li>
             <div id="task-filters">
-              <li class="nav-item">
+              <div id="select_status_area">
+                <li class="nav-item">
+                  <div class="form-group">
+                    <span class="h7">By User:</span>
+                  </div>
+                  <div class="form-group">
+                    <select class="form-select form-control-md" id="task-filter-assingee">
+                      <option value="0">-- Select --</option>
+                    </select>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div class="form-group">
+                    <span class="h7">By Status:</span>
+                  </div>
+                  <div class="form-group">
+                    <select class="form-select form-control-md" id="task-filter-status">
+                      <option value="default">-- Select --</option>
+                    </select>
+                  </div>
+                </li>
+              </div>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
                 <div class="form-group">
-                  <span class="h7">By User:</span>
-                </div>
-                <div class="form-group">
-                  <select class="form-select form-control-md" id="task-filter-assingee">
-                    <option value="0">-- Select --</option>
-                  </select>
+                  <span class="h2">HISTORY</span>
                 </div>
               </li>
               <li class="nav-item">
                 <div class="form-group">
-                  <span class="h7">By Status:</span>
-                </div>
-                <div class="form-group">
-                  <select class="form-select form-control-md" id="task-filter-status">
-                    <option value="default">-- Select --</option>
-                  </select>
-                </div>
-              </li>
-              <li class="nav-item">
-                <div class="form-group">
-                  <span class="h7">By Date:</span>
+                  <span class="h7">Pick a Date:</span>
                 </div>
                 <div class="form-group">
                   <input type="date" id="task_filter_date" name="datePicker" class="form-control form-control-md">
@@ -221,8 +230,8 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <button class="btn btn-primary" id="top_menu_tasks_button"><i class="icon-list"></i></button>
+              <li class="nav-item" id="top_menu_tasks_button">
+                <button class="btn btn-primary"><i class="icon-list"></i></button>
               </li>
               <li class="nav-item ml-2">
                 <button id="top_menu_settings_button" class="btn btn-primary"><i class="icon-settings"></i></button>
@@ -843,13 +852,15 @@
                         <div class="form-group">
                           <div class="input-group mb-3">
                             <span class="input-group-text" id="">Web URL</span>
-                            <input id="jira_web_url" type="text" class="form-control" placeholder="Ex:- https://example.com"
-                              aria-label="jiraweburl" aria-describedby="basic-addon1" />
+                            <input id="jira_web_url" type="text" class="form-control"
+                              placeholder="Ex:- https://example.com" aria-label="jiraweburl"
+                              aria-describedby="basic-addon1" />
                           </div>
                           <div class="input-group mb-3">
                             <span class="input-group-text" id="">API URL</span>
-                            <input id="jira_api_url" type="text" class="form-control" placeholder="Ex:- https://example.com"
-                              aria-label="jiraapiurl" aria-describedby="basic-addon1" />
+                            <input id="jira_api_url" type="text" class="form-control"
+                              placeholder="Ex:- https://example.com" aria-label="jiraapiurl"
+                              aria-describedby="basic-addon1" />
                           </div>
                           <div class="input-group mb-3">
                             <span class="input-group-text" id="">API Key</span>

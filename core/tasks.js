@@ -1,4 +1,5 @@
 import { apiGet, apiPost, apiDelete, apiUpdate } from './api.js'
+import { clearUserInputs } from './utility.js';
 
 export class Tasks {
 
@@ -15,18 +16,15 @@ export class Tasks {
             assigneeid: task_assignee,
             name: task_name,
             status: task_status,
-            jiraid: null,
-            createddate: "1970-01-14",
-            completeddate: null,
             project: task_project,
             createjiraforme: createjiraforme
         }
-        async function load() {
-            apiPost('/api/tasks', apirequestbody)
-            Tasks.get()
-        }
-        load()
 
+        apiPost('/api/tasks', apirequestbody)
+        clearUserInputs()
+        setTimeout(() => {
+            Tasks.get()
+        }, 500);
     }
 
     static get() {
@@ -39,31 +37,26 @@ export class Tasks {
 
     static getByDate(selecteddate) {
         apiGet("/api/tasks/bydate/" + selecteddate).then(renderedTasks => {
+            sessionStorage.setItem('filteredDateTaskData', JSON.stringify(renderedTasks));
             loadingRenderedTasks(renderedTasks)
         })
     }
 
-
     static getFiltered() {
-
-        const renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
+        let renderedTasks = JSON.parse(sessionStorage.getItem('taskData'));
+        
         const userFilterID = Number(sessionStorage.getItem('userFilterData'));
         const statusFilter = sessionStorage.getItem('statusFilterData');
-        const dateFilter = sessionStorage.getItem('dateFilterData');
 
         let filteredTasks = renderedTasks;
-
+            
         if (userFilterID !== 0) {
-            filteredTasks = filteredTasks.filter(task => task.task_assingeeid === userFilterID);
-            console.log(userFilterID)
+            filteredTasks = filteredTasks.filter(task => task.task_assigneeid === userFilterID);
         }
         if (statusFilter !== 'default') {
             filteredTasks = filteredTasks.filter(task => task.task_status === statusFilter);
         }
-        if (dateFilter !== new Date().toISOString().split('T')[0]) {
-            filteredTasks = filteredTasks.filter(task => task.task_completeddate === dateFilter);
-        }
-        if (userFilterID === 0 && statusFilter === 'default' && dateFilter === new Date().toISOString().split('T')[0] || dateFilter === "") {
+        if (userFilterID === 0 && statusFilter === 'default') {
             filteredTasks = renderedTasks;
         }
         loadingRenderedTasks(filteredTasks)
@@ -78,28 +71,26 @@ export class Tasks {
             "project": "Homepage Redesign",
             "status": updatedtaskstatus,
             "jiraid": "JIRA-101",
-            "createddate": "2024-07-01",
-            "completeddate": "2024-07-10"
         }
+        apiUpdate("/api/tasks/" + taskid, apirequestbody)
+        setTimeout(() => {
+            Tasks.get()
+        }, 500);
 
-        apiUpdate("/api/tasks/" + taskid, apirequestbody, updatedtaskname, updatedtaskassignee, updatedtaskstatus)
-        apiGet("/api/tasks").then(renderedTasks => {
-            sessionStorage.setItem('taskData', JSON.stringify(renderedTasks));
-        })
     }
 
     static remove(taskid) {
         apiDelete('/api/tasks/' + taskid)
-        Tasks.getFiltered()
+        setTimeout(() => {
+            Tasks.get()
+        }, 500);
     }
 }
 
 export async function loadingRenderedTasks(renderedTasks) {
 
     const renderedStatus = JSON.parse(sessionStorage.getItem('statusData'));
-    // if (renderedStatus[0] === undefined) {
-    //     location.reload()
-    // }
+
     const statusvalues = renderedStatus[0].parameters.split(',');
     const usersvalues = JSON.parse(sessionStorage.getItem('usersData'));
 
@@ -107,7 +98,6 @@ export async function loadingRenderedTasks(renderedTasks) {
     taskTableBody.innerHTML = '';
 
     renderedTasks.forEach(task => {
-        console.log(task.task_assigneeid)
 
         let statusDropdown = `<select class="form-select form-control-md" id="taskstatus-${task.task_id}">`;
         statusvalues.forEach(value => {
@@ -122,12 +112,9 @@ export async function loadingRenderedTasks(renderedTasks) {
         
         let usersDropdown = `<select class="form-select form-control-md" id="taskassignee-${task.task_id}">`;
         usersvalues.forEach(user => {
-            console.log(`${user.firstname} ${user.lastname}`)
             if (task.task_assigneeid === user.id) {
-                console.log(`Checking ${task.task_assigneeid} and ${user.id}`)
                 usersDropdown += `<option value="${user.id}" selected>${user.firstname} ${user.lastname}</option>`
             } else {
-                console.log(`Checking ${task.task_assigneeid} and ${user.id}`)
                 usersDropdown += `<option value="${user.id}">${user.firstname} ${user.lastname}</option>`
             }
         });
@@ -162,8 +149,8 @@ export async function loadingRenderedTasks(renderedTasks) {
             ${statusDropdown}
         </td>
         <td style="text-align: center">
-            <button class="task-submit-button btn btn-secondary btn-sm" data-id="${task.task_id}"><i class="icon-check"></i></button>
-            <button class="task-delete-button btn btn-danger btn-sm" data-id="${task.task_id}"><i class="icon-trash"></i></button>
+            <button class="task-submit-button btn btn-secondary btn-sm" data-id="${task.task_id}">Save</button>
+            <button class="task-delete-button btn btn-danger btn-sm" data-id="${task.task_id}">Delete</button>
         </td>
             `;
         taskTableBody.appendChild(row);
@@ -173,12 +160,19 @@ export async function loadingRenderedTasks(renderedTasks) {
     document.querySelectorAll('.task-submit-button').forEach(button => {
         button.addEventListener('click', (eventEdit) => {
             const taskid = Number(eventEdit.target.getAttribute('data-id'));
+            // const taskid = eventEdit;
+            // console.log(taskid.target.getAttribute('data-id'))
 
             const updatedtaskname = (document.getElementById('taskname-' + taskid).innerText).trim()
             const updatedtaskassignee = document.getElementById('taskassignee-' + taskid).value.trim()
             const updatedtaskstatus = document.getElementById('taskstatus-' + taskid).value.trim()
+            
+            console.log(updatedtaskname)
+            console.log(updatedtaskassignee)
+            console.log(updatedtaskstatus)
 
             Tasks.update(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus)
+            Tasks.get()
         });
     });
 
