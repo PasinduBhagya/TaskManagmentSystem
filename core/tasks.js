@@ -24,7 +24,7 @@ export class Tasks {
         clearUserInputs()
         setTimeout(() => {
             Tasks.get()
-        }, 500);
+        }, 5500);
     }
 
     static get() {
@@ -160,16 +160,10 @@ export async function loadingRenderedTasks(renderedTasks) {
     document.querySelectorAll('.task-submit-button').forEach(button => {
         button.addEventListener('click', (eventEdit) => {
             const taskid = Number(eventEdit.target.getAttribute('data-id'));
-            // const taskid = eventEdit;
-            // console.log(taskid.target.getAttribute('data-id'))
 
             const updatedtaskname = (document.getElementById('taskname-' + taskid).innerText).trim()
             const updatedtaskassignee = document.getElementById('taskassignee-' + taskid).value.trim()
             const updatedtaskstatus = document.getElementById('taskstatus-' + taskid).value.trim()
-            
-            console.log(updatedtaskname)
-            console.log(updatedtaskassignee)
-            console.log(updatedtaskstatus)
 
             Tasks.update(taskid, updatedtaskname, updatedtaskassignee, updatedtaskstatus)
             Tasks.get()

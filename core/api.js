@@ -2,7 +2,7 @@ import { Tasks, loadingRenderedTasks } from "./tasks.js";
 
 let fetchData = [];
 
-const baseIPAddress = "http://192.168.8.103:8080"
+const baseIPAddress = "http://192.168.48.136:8080"
 
 //////////////////////////////////////////////////////
 export async function apiGet(path) {
