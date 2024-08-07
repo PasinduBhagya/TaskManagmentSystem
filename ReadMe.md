@@ -48,6 +48,9 @@ The main page of the application consists of three areas:
      ![History Filter](https://github.com/user-attachments/assets/4f134c83-39b3-4263-b411-8c34210814b8)
 
      - **History Filter:** Filters tasks based on their completion date, making it easy to find historical data.
+     
+     ![History Filter Applied](https://github.com/user-attachments/assets/855b4317-e0e9-4dbe-a118-d94a8eb0fd1f)
+
 
 ## Benefits
 - **Efficiency:** Automates the creation of JIRA tickets and updates to the task sheet, saving engineers valuable time.
