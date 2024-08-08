@@ -34,7 +34,10 @@ The main page of the application consists of three areas:
 3. **Main Window:**
    - Displays all incomplete tasks up to the current date, providing a clear view of pending tasks and new task adding section.
      
-     ![image](https://github.com/user-attachments/assets/56e69e9a-7ca1-419c-b4f9-0f28aa4b9378)
+     ![Main Window](https://github.com/user-attachments/assets/56e69e9a-7ca1-419c-b4f9-0f28aa4b9378)
+
+     ![Main Window](https://github.com/user-attachments/assets/f15f20af-9689-4a37-8dd4-dc4d5515f992)
+
 
 
 4. **Left-Hand Side Filtering Options:**
